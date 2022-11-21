@@ -1,0 +1,16 @@
+### 项目进度说明（updating）
+
+可用验证账户：
+
+username：user1
+
+password：pdd
+
+
+
+#### 目前后端进度：
+
+Nov/21/15:03
+
+实现后端登陆采用jwt验证
+

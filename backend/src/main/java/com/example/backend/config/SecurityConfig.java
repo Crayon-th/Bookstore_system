@@ -1,6 +1,5 @@
 package com.example.backend.config;
 
-import com.example.backend.config.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    //放行url
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()

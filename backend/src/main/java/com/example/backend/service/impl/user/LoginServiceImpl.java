@@ -17,22 +17,21 @@ import java.util.Map;
 public class LoginServiceImpl implements LoginService {
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Override
     public Map<String, String> getToken(String username, String password) {
         //封装用户名和密码
         UsernamePasswordAuthenticationToken authenticationToken=
                 new UsernamePasswordAuthenticationToken(username,password);
-
+        System.out.println(username);
+        System.out.println(password);
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-
+        System.out.println("here");
         //验证成功取用户
         UserDetailsImpl loginUser=(UserDetailsImpl) authenticate.getPrincipal();
         User user=loginUser.getUser();
 
         String jwt= JwtUtil.createJWT(user.getId().toString()); //拿userid去create JWT
         Map<String,String> m=new HashMap<>();
-
         m.put("message","success");
         m.put("token",jwt);
         return m;
