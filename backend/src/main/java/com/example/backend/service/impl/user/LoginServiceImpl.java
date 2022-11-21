@@ -22,10 +22,7 @@ public class LoginServiceImpl implements LoginService {
         //封装用户名和密码
         UsernamePasswordAuthenticationToken authenticationToken=
                 new UsernamePasswordAuthenticationToken(username,password);
-        System.out.println(username);
-        System.out.println(password);
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-        System.out.println("here");
         //验证成功取用户
         UserDetailsImpl loginUser=(UserDetailsImpl) authenticate.getPrincipal();
         User user=loginUser.getUser();
