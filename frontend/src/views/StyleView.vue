@@ -1,25 +1,3 @@
-<script setup>
-import { useRouter } from "vue-router";
-import { useStyleStore } from "@/stores/style.js";
-import { gradientBgPurplePink } from "@/colors.js";
-import SectionMain from "@/components/SectionMain.vue";
-import CardBox from "@/components/CardBox.vue";
-import LayoutGuest from "@/layouts/LayoutGuest.vue";
-
-const styles = ["white", "basic"];
-
-const styleStore = useStyleStore();
-
-styleStore.setDarkMode(false);
-
-const router = useRouter();
-
-const click = (slug) => {
-  styleStore.setStyle(slug);
-  router.push("/dashboard");
-};
-</script>
-
 <template>
   <LayoutGuest>
     <div
@@ -30,13 +8,10 @@ const click = (slug) => {
         <h1
           class="text-4xl md:text-5xl text-center text-white font-bold mt-12 mb-3 lg:mt-0"
         >
-          Pick a style&hellip;
+          Welcome to our online bookstore
         </h1>
         <h2 class="text-xl md:text-xl text-center text-white mb-12">
-          Style switching with a single
-          <code class="px-1.5 py-0.5 rounded bg-white bg-opacity-20"
-            >action()</code
-          >
+          Enjoy your time here&hellip;
         </h2>
         <div
           class="grid gap-6 grid-cols-1 lg:grid-cols-2 px-6 max-w-6xl mx-auto"
@@ -66,3 +41,25 @@ const click = (slug) => {
     </div>
   </LayoutGuest>
 </template>
+
+<script setup>
+import { useRouter } from "vue-router";
+import { useStyleStore } from "@/stores/style.js";
+import { gradientBgPurplePink } from "@/colors.js";
+import SectionMain from "@/components/SectionMain.vue";
+import CardBox from "@/components/CardBox.vue";
+import LayoutGuest from "@/layouts/LayoutGuest.vue";
+
+const styles = ["white", "basic"];
+
+const styleStore = useStyleStore();
+
+styleStore.setDarkMode(false);
+
+const router = useRouter();
+
+const click = (slug) => {
+  styleStore.setStyle(slug);
+  router.push("/dashboard");
+};
+</script>
