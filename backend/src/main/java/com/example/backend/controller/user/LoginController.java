@@ -1,6 +1,6 @@
 package com.example.backend.controller.user;
 
-import com.example.backend.service.User.LoginService;
+import com.example.backend.service.user.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

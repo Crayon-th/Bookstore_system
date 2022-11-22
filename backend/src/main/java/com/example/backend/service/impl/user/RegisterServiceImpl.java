@@ -3,7 +3,7 @@ package com.example.backend.service.impl.user;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.backend.mapper.UserMapper;
 import com.example.backend.pojo.User;
-import com.example.backend.service.User.RegisterService;
+import com.example.backend.service.user.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

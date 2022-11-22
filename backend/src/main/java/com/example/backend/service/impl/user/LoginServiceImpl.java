@@ -1,7 +1,7 @@
 package com.example.backend.service.impl.user;
 
 import com.example.backend.pojo.User;
-import com.example.backend.service.User.LoginService;
+import com.example.backend.service.user.LoginService;
 import com.example.backend.service.impl.utils.UserDetailsImpl;
 import com.example.backend.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;

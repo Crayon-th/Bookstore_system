@@ -1,10 +1,9 @@
 package com.example.backend.service.impl.user;
 
 import com.example.backend.pojo.User;
-import com.example.backend.service.User.InfoService;
+import com.example.backend.service.user.InfoService;
 import com.example.backend.service.impl.utils.UserDetailsImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 

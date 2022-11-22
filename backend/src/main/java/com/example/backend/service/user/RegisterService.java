@@ -1,4 +1,4 @@
-package com.example.backend.service.User;
+package com.example.backend.service.user;
 
 import java.util.Map;
 
