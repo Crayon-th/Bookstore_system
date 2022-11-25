@@ -2,9 +2,12 @@
 
 可用验证账户：
 
-username：user1
+username：nn
 
-password：pdd
+password：111
+
+username:dd
+password: pdd
 
 
 
