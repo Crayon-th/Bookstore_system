@@ -88,9 +88,6 @@ public class AuthServiceImpl implements AuthService {
         User sysUser = new User();
         sysUser.setUsername(userName);
         try {
-//            System.out.println("\n\n\n\n");
-//            System.out.println(authUserDto.getPassword());
-              //sysUser.setPassword(passwordEncoder.encode(RsaUtils.decryptByPrivateKey(privateKey, authUserDto.getPassword())));
               sysUser.setPassword(passwordEncoder.encode(authUserDto.getPassword()));
         } catch (Exception e) {
             throw new RuntimeException("注册密码异常");
@@ -106,10 +103,6 @@ public class AuthServiceImpl implements AuthService {
         try {
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(authUserDto.getUsername(), authUserDto.getPassword());
-            System.out.println(authUserDto.getUsername());
-            System.out.println(authUserDto.getPassword());
-            System.out.println(passwordEncoder.matches(authUserDto.getPassword(),"$2a$10$/RA.HOhSvEoCbZ4jYubBu.oCyUCQ11stSP51s/fC0V7aqAUOycp4q"));
-            System.out.println(authenticationToken);
             //Authentication authentication = authenticationManager.authenticate(authenticationToken);
             Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
