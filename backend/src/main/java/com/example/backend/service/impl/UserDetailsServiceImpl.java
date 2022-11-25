@@ -1,29 +1,45 @@
 package com.example.backend.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.backend.mapper.UserMapper;
 import com.example.backend.pojo.User;
-import com.example.backend.service.impl.utils.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.example.backend.service.auth.UserService;
+import com.example.backend.utils.dto.JwtUserDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
+/**
+ * 用户认证
+ *
+ * @author zhuhuix
+ * @date 2020-06-15
+ */
+@RequiredArgsConstructor
+@Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
-    @Autowired
-    private UserMapper userMapper;
+
+    private final UserService userService;
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //根据username到数据库查询user【借助userMapper】
-        //这里返回类型是UserDetails接口类型，所以定义一个UserDetailsImpl类
-        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("username",username);
-        User user=userMapper.selectOne(queryWrapper);
-        if(user==null){
-            throw new RuntimeException("用户不存在");
+    public JwtUserDto loadUserByUsername(String username) {
+        User user;
+        try {
+            user = userService.findByUsername(username);
+        } catch (RuntimeException e) {
+            // SpringSecurity会自动转换UsernameNotFoundException为BadCredentialsException
+            throw new UsernameNotFoundException("无此用户", e);
         }
-        return new UserDetailsImpl(user);
+        if (user == null) {
+            throw new UsernameNotFoundException("无此用户");
+        } else {
+            if (!user.getEnabled()) {
+                throw new RuntimeException("账号未激活");
+            }
+            return new JwtUserDto(
+                    user,
+                    null,
+                    null
+            );
+        }
     }
 }

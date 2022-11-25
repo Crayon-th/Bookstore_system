@@ -1,19 +1,32 @@
 package com.example.backend;
 
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.SimpleHash;
+import com.example.backend.utils.rsa.RsaUtils;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
 class BackendApplicationTests {
 
+    @Autowired
+    JavaMailSenderImpl mailSender;
+    @Value("${rsa.private-key}")
+    private String privateKey;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     @Test
-    void contextLoads() {
-        String salt=new SecureRandomNumberGenerator().nextBytes().toString();
-        String encoded = new SimpleHash("md5", "pdd", salt, 2).toString();
-        System.out.println(salt);
-        System.out.println(encoded);
+    void contextLoads() throws Exception {
+        String pw="1111";
+        String sss=passwordEncoder.encode(pw);
+        System.out.println(sss);
+
+
     }
 
 }
