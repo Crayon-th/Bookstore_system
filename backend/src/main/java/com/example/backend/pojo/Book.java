@@ -15,4 +15,7 @@ public class Book {
     private String bookname;
     private String type;
     private String state;
+    private String introduction;
+    private String version;
+    private String author;
 }

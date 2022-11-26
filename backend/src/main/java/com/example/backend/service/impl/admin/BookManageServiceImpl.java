@@ -3,7 +3,7 @@ package com.example.backend.service.impl.admin;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.backend.mapper.BookMapper;
 import com.example.backend.pojo.Book;
-import com.example.backend.service.admin.BookSearchService;
+import com.example.backend.service.admin.BookManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +12,17 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class BookSearchServiceImpl implements BookSearchService {
+public class BookManageServiceImpl implements BookManageService {
     @Autowired
     private BookMapper bookMapper;
+
     @Override
-    public Map<String,Object> searchbook(String standard, String content,boolean ifblur) {
+    public List<Book> getallbooks() {
+        return bookMapper.selectList(null);
+    }
+
+    @Override
+    public Map<String,Object> searchbook(String standard, String content, boolean ifblur) {
         Map<String,Object>ret=new HashMap<>();
         if(content==null){
             ret.put("message","搜索条件为空");
@@ -88,6 +94,26 @@ public class BookSearchServiceImpl implements BookSearchService {
         }
 
         ret.put("message","搜索条件选择错误"); //设置成下拉框的情况这里应该不会触发到
+        return ret;
+    }
+
+    @Override
+    public Map<String,String> editbook(Map<String,String> m){
+        Map<String,String> ret=new HashMap<>();
+        String isbn=m.get("isbn");
+        QueryWrapper<Book> qw=new QueryWrapper<>();
+        qw.eq("isbn",isbn);
+        Book thisbook=bookMapper.selectOne(qw);
+        thisbook.setBookname(m.get("bookname"));
+        thisbook.setState(m.get("state"));
+        thisbook.setAuthor(m.get("author"));
+        thisbook.setType(m.get("type"));
+        thisbook.setVersion(m.get("version"));
+        thisbook.setIntroduction(m.get("introduction"));
+        bookMapper.deleteById(isbn);
+        bookMapper.insert(thisbook);
+
+        ret.put("success","editsuccess");
         return ret;
     }
 }

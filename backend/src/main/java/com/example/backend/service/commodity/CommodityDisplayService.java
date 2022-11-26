@@ -10,6 +10,4 @@ import java.util.Map;
 public interface CommodityDisplayService {
 
     Map<String,String> ShowCommodities();
-
-    Map
 }
