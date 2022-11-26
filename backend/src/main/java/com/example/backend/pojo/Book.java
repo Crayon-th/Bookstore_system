@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
-    @TableId(type= IdType.AUTO)
-    private Integer id;
-    private String bookname;
+    @TableId
     private String isbn;
-    private String style;
+    private String bookname;
+    private String type;
     private String state;
 }

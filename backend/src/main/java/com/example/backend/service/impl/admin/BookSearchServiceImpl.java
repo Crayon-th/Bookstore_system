@@ -50,7 +50,7 @@ public class BookSearchServiceImpl implements BookSearchService {
                 else{
                     ret.put("message","查找成功1");
                     for(Book b:containkeybooks){
-                        ret.put("book"+b.getId(),b);
+                        ret.put("book"+b.getIsbn(),b);
                     }
                 }
                 return ret;
@@ -81,7 +81,7 @@ public class BookSearchServiceImpl implements BookSearchService {
             else{
                 ret.put("message","查找成功");
                 for(Book b:booklist){
-                    ret.put("book"+b.getId(),b);
+                    ret.put("book"+b.getIsbn(),b);
                 }
             }
             return ret;
