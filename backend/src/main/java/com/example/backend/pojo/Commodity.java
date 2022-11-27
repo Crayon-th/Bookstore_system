@@ -17,6 +17,14 @@ public class Commodity {
 
     private String isbn;
 
+    @TableField("bookName")
+    private String bookName;
+    @TableField("author")
+    private String author;
+    @TableField("version")
+    private String version;
+    @TableField("imageurl")
+    private String imageurl;
     @TableField("createTime")
     private String createTime;
     @TableField("damageCondition")
@@ -27,11 +35,10 @@ public class Commodity {
     private Integer uid;
 
     @TableField("isFinished")
-    private boolean isFinished;
+    public boolean isFinished;
 
-    @TableField(exist = false)
-    public Book book;
 
+    /*
     public Commodity(String isbn,String createTime,String damageCondition,String agingCondition,float price,Integer uid,Book book)
     {
         this.isbn = isbn;
@@ -43,4 +50,5 @@ public class Commodity {
         this.book = book;
         this.isFinished = false;
     }
+    */
 }

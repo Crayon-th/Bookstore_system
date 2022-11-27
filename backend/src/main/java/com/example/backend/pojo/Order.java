@@ -17,7 +17,10 @@ public class Order {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private float price;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createTime;
+    @TableField("createTime")
+    private String createTime;
+    private Integer sellerid;
+    private Integer buyerid;
+
 
 }
