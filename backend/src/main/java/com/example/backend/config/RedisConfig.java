@@ -24,12 +24,6 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Redis配置类
- *
- * @author zhuhuix
- * @date 2020-06-11
- */
 @Configuration
 @EnableCaching
 @ConditionalOnClass(RedisOperations.class)

@@ -1,7 +1,9 @@
 package com.example.backend.controller.order;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.backend.mapper.OrderMapper;
 import com.example.backend.pojo.Commodity;
+import com.example.backend.pojo.Order;
 import com.example.backend.service.order.OrderService;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private OrderMapper mapper;
     @PostMapping("/order/")
     public Map<String,String> buyCommodity(@RequestParam Integer buyerid, @RequestBody Commodity commodity)
     {
@@ -38,6 +42,7 @@ public class OrderController {
         IPage iPage = orderService.getOrderAsSeller(sellerid,current,size,sort);
         return iPage;
     }
+
 
 
 }

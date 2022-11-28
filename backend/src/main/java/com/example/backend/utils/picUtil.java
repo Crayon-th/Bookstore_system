@@ -12,7 +12,8 @@ public class picUtil {
     {
         String name = picture.getOriginalFilename();
         String suffixName = name.substring(name.lastIndexOf("."));
-        name = UUID.randomUUID()+suffixName;
+        //name = UUID.randomUUID()+suffixName;
+        name = 'a'+suffixName;
 
         folderName = "/"+folderName+"/";
         String path = request.getServletContext().getRealPath(folderName);
@@ -25,6 +26,6 @@ public class picUtil {
 
         File file = new File(path+name);
         picture.transferTo(file);
-        return path+name;
+        return name;
     }
 }

@@ -19,13 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
-/**
- * Spring Security配置类
- *
- * @author zhuhuix
- * @date 2020-03-25
- */
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -92,7 +85,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js",
-                        "/webSocket/**"
+                        "/webSocket/**",
+                        "/*.jpg"
                 ).permitAll()
 
                 // 放行swagger
@@ -111,7 +105,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                 //允许匿名及登录用户访问
-                .antMatchers("/api/auth/**", "/error/**","/api/admin/**","/commodity/**").permitAll()
+                .antMatchers("/api/auth/**", "/error/**","/api/admin/**","/commodity/**","/order/**").permitAll()
                 // 所有请求都需要认证
                 .anyRequest().authenticated()
                 .and().apply(securityConfigurerAdapter());
