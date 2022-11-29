@@ -25,5 +25,7 @@ public class ViolationReport {
     private String violationDescription;
     private String evidence;
     private String date;
+    @TableField("reportedID")
+    private Integer reportedID;
 
 }
