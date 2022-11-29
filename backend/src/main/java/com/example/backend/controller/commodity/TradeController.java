@@ -31,7 +31,7 @@ public class TradeController {
     {
         picUtil picUtil = new picUtil();
         try{
-            String path = picUtil.savePicture(picture,"upload",request);
+            String path = picUtil.savePicture(picture,"book",request);
             return path;
         }
         catch(Exception e){
