@@ -35,6 +35,7 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
         String pathUtl = "file:" + path.replace("\\","/");
         registry.addResourceHandler("/file/**").addResourceLocations(pathUtl).setCachePeriod(0);
         registry.addResourceHandler("/**").addResourceLocations("classpath:/META-INF/resources/").setCachePeriod(0);
-        registry.addResourceHandler("/book/**").addResourceLocations("/book/").setCachePeriod(0);
+        registry.addResourceHandler("/book/**").addResourceLocations("file:C:/book/").setCachePeriod(0);
+        registry.addResourceHandler("/report/**").addResourceLocations("file:C/report/").setCachePeriod(0);
     }
 }
