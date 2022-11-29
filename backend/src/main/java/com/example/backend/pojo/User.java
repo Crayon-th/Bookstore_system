@@ -24,4 +24,6 @@ public class User {
 
     private Boolean enabled;
 
+    private String seed;
+
 }

@@ -94,6 +94,8 @@ public class AuthServiceImpl implements AuthService {
         }
         sysUser.setEmail(authUserDto.getEmail());
         sysUser.setEnabled(true);
+        int i = (int)Math.random();
+        sysUser.setSeed(String.valueOf(i));
         return userService.create(sysUser) != null;
     }
 
