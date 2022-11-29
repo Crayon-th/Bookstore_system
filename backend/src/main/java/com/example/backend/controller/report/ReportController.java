@@ -18,11 +18,11 @@ public class ReportController {
     private ReportService reportService;
     private timeUtil timeUtil=new timeUtil();
     @PostMapping("/user/report/")
-    public int Report(int reportID, int violationType, String violationDescription, MultipartFile evidence, HttpServletRequest request) throws IOException {
+    public int Report(int reportID, int reportedID,int violationType, String violationDescription, MultipartFile evidence, HttpServletRequest request) throws IOException {
         picUtil picUtil=new picUtil();
         String evidencePath=picUtil.savePicture(evidence,"report",request);
         String date=timeUtil.getCurrentTimeStamp();
-        ViolationReport violationReport=new ViolationReport(null,reportID,violationType,violationDescription,evidencePath,date);
+        ViolationReport violationReport=new ViolationReport(null,reportID,violationType,violationDescription,evidencePath,date,reportedID);
         System.out.println(evidencePath);
         return reportService.Report(violationReport);
     }
