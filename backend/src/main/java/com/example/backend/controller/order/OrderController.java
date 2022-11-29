@@ -3,7 +3,7 @@ package com.example.backend.controller.order;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.backend.mapper.OrderMapper;
 import com.example.backend.pojo.Commodity;
-import com.example.backend.pojo.Order;
+import com.example.backend.pojo.Orders;
 import com.example.backend.service.order.OrderService;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;

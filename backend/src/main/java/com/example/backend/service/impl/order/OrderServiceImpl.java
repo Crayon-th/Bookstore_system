@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.backend.mapper.OrderMapper;
 import com.example.backend.pojo.Commodity;
-import com.example.backend.pojo.Order;
+import com.example.backend.pojo.Orders;
 import com.example.backend.service.commodity.TradeService;
 import com.example.backend.service.order.OrderService;
 import lombok.experimental.Accessors;
@@ -41,8 +41,8 @@ public class OrderServiceImpl implements OrderService {
         {
             return m;
         }
-        Order order = new Order(null, commodity.getPrice(), time, commodity.getUid(), buyerid);
-        orderMapper.insert(order);
+        Orders orders = new Orders(null, commodity.getPrice(), time, commodity.getUid(), buyerid);
+        orderMapper.insert(orders);
         m.put("message","创建订单成功");
         return m;
     }
@@ -50,8 +50,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public IPage getOrderAsBuyer(Integer buyerid, long current, long size, boolean sort)
     {
-        Page<Order> page = new Page<>(current,size);
-        QueryWrapper<Order> queryWrapper = new QueryWrapper();
+        Page<Orders> page = new Page<>(current,size);
+        QueryWrapper<Orders> queryWrapper = new QueryWrapper();
         IPage iPage;
         if(sort)
         {
@@ -67,8 +67,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public IPage getOrderAsSeller(Integer sellerid,long current,long size, boolean sort)
     {
-        Page<Order> page = new Page<>(current,size);
-        QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
+        Page<Orders> page = new Page<>(current,size);
+        QueryWrapper<Orders> queryWrapper = new QueryWrapper<>();
         IPage iPage;
         if(sort)
         {
