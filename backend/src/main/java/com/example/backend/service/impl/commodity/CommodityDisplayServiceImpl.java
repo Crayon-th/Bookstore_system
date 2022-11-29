@@ -18,7 +18,9 @@ public class CommodityDisplayServiceImpl implements CommodityDisplayService {
     public IPage showCommodities(long current,long size)
     {
         Page<Commodity> page = new Page<>(current,size);
-        IPage ipage = commodityMapper.selectPage(page,null);
+        QueryWrapper<Commodity> queryWrapper = new QueryWrapper();
+        int unfinished = 0;
+        IPage ipage = commodityMapper.selectPage(page,queryWrapper.eq("isFinished",unfinished));
         return ipage;
     }
 

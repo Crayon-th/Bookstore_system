@@ -1,5 +1,6 @@
 package com.example.backend.controller.admin;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.backend.pojo.Book;
 import com.example.backend.service.admin.BookManageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ public class BookManageController {
     private BookManageService bookManageService;
 
     @GetMapping("/api/admin/bookoverview/")
-    public List<Book> getallbooks(){
-        return bookManageService.getallbooks();
+    public IPage getallbooks(long current,long size){
+        return bookManageService.getallbooks(current, size);
     }
 
     @GetMapping("/api/admin/booksearch/")
@@ -28,4 +29,15 @@ public class BookManageController {
         return bookManageService.editbook(m);
     }
 
+    @PostMapping("/api/admin/book/")
+    public Map<String,String> addbook(@RequestBody Book book)
+    {
+        return bookManageService.addbook(book);
+    }
+
+    @DeleteMapping("/api/admin/book/")
+    public Map<String,String> deletebook(String isbn)
+    {
+        return  bookManageService.deletebook(isbn);
+    }
 }

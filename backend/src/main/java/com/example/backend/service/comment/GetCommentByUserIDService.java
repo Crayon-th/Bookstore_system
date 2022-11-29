@@ -1,9 +1,10 @@
 package com.example.backend.service.comment;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.backend.pojo.Comment;
 
 import java.util.List;
 
 public interface GetCommentByUserIDService {
-    List<Comment> getComment(int userID);
+    IPage getComment(int userID,long current,long size);
 }

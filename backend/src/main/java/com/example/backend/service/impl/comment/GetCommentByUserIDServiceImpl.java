@@ -1,6 +1,8 @@
 package com.example.backend.service.impl.comment;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.backend.mapper.CommentMapper;
 import com.example.backend.pojo.Comment;
 import com.example.backend.service.comment.GetCommentByUserIDService;
@@ -13,11 +15,11 @@ public class GetCommentByUserIDServiceImpl implements GetCommentByUserIDService 
     @Autowired
     private CommentMapper commentMapper;
     @Override
-    public List<Comment> getComment(int userID) {
-
+    public IPage getComment(int userID,long current,long size)
+    {
+        Page<Comment> page = new Page<>(current,size);
         QueryWrapper<Comment> qw=new QueryWrapper<Comment>();
-        qw.eq("replyID",userID);
-        List<Comment>comments=commentMapper.selectList(qw);
+        IPage<Comment> comments=commentMapper.selectPage(page,qw.eq("replyID",userID));
         return comments;
     }
 }

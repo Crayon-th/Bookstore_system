@@ -1,6 +1,8 @@
 package com.example.backend.service.impl.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.backend.mapper.BookMapper;
 import com.example.backend.pojo.Book;
 import com.example.backend.service.admin.BookManageService;
@@ -17,8 +19,9 @@ public class BookManageServiceImpl implements BookManageService {
     private BookMapper bookMapper;
 
     @Override
-    public List<Book> getallbooks() {
-        return bookMapper.selectList(null);
+    public IPage getallbooks(long current,long size) {
+        Page<Book> page = new Page<>(current,size);
+        return bookMapper.selectPage(page,null);
     }
 
     @Override
@@ -116,4 +119,39 @@ public class BookManageServiceImpl implements BookManageService {
         ret.put("success","editsuccess");
         return ret;
     }
+
+    @Override
+    public Map<String,String> addbook(Book book)
+    {
+        Map<String,String> m =new HashMap<>();
+        try{
+            bookMapper.insert(book);
+            m.put("message","成功添加书籍");
+            return m;
+        }
+        catch (Exception e)
+        {
+            m.put("message","数据库插入书籍操作失败");
+            return m;
+        }
+    }
+
+    @Override
+    public Map<String,String> deletebook(String isbn)
+    {
+        Map<String,String> m = new HashMap<>();
+        QueryWrapper<Book> queryWrapper = new QueryWrapper<>();
+        try
+        {
+            bookMapper.deleteById(isbn);
+            m.put("message","书籍删除成功");
+            return m;
+        }
+        catch (Exception e)
+        {
+            m.put("message","数据库删除书籍失败");
+            return m;
+        }
+    }
+
 }

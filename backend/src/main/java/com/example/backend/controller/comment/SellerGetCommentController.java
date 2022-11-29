@@ -1,5 +1,6 @@
 package com.example.backend.controller.comment;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.backend.pojo.Comment;
 import com.example.backend.service.comment.GetCommentByOrderIDService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class SellerGetCommentController {
     @Autowired
     private GetCommentByOrderIDService getCommentByOrderIDService;
     @GetMapping("/user/sellerGetComment/")
-    List<Comment> getComment(int orderID){
-        return getCommentByOrderIDService.getComment(orderID);
+    IPage getComment(int orderID,long current,long size){
+        return getCommentByOrderIDService.getComment(orderID,current,size);
     }
 }
