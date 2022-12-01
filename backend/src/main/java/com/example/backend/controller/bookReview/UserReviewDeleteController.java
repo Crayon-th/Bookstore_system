@@ -17,9 +17,6 @@ public class UserReviewDeleteController {
     private GetReviewService getReviewService;
     @PostMapping("/user/deleteReview/")
     public int deleteReview(int ID){
-        String isbn=getReviewService.getOneReview(ID).getIsbn();
-        int result=userReviewDeleteService.deleteReview(ID);
-        bookManageService.getScore(isbn);
-        return result;
+        return userReviewDeleteService.deleteReview(ID);
     }
 }

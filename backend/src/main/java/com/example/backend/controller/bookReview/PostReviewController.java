@@ -18,8 +18,6 @@ public class PostReviewController {
     @PostMapping("/user/postReview/")
     public int postReview(BookReview bookReview){
         bookReview.setDate(timeUtil.getCurrentTimeStamp());
-        int result=postReviewService.postReview(bookReview);
-        bookManageService.getScore(bookReview.getIsbn());
-        return result;
+        return postReviewService.postReview(bookReview);
     }
 }
