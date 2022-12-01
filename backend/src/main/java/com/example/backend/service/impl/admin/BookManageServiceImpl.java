@@ -1,14 +1,18 @@
 package com.example.backend.service.impl.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.backend.mapper.BookMapper;
+import com.example.backend.mapper.BookReviewMapper;
 import com.example.backend.pojo.Book;
+import com.example.backend.pojo.BookReview;
 import com.example.backend.service.admin.BookManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +21,8 @@ import java.util.Map;
 public class BookManageServiceImpl implements BookManageService {
     @Autowired
     private BookMapper bookMapper;
+    @Autowired
+    private BookReviewMapper bookReviewMapper;
 
     @Override
     public IPage getallbooks(long current,long size) {
@@ -152,6 +158,20 @@ public class BookManageServiceImpl implements BookManageService {
             m.put("message","数据库删除书籍失败");
             return m;
         }
+
+
+    }
+    @Override
+    public int getScore(String isbn)
+    {
+        QueryWrapper<BookReview> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("IFNULL(avg(score),0) as AverageScore")
+                .eq("isbn", isbn);
+        List<Map<String, Object> >map = bookReviewMapper.selectMaps(queryWrapper);
+        double sumCount = (double) map.get(0).get("AverageScore");
+        UpdateWrapper<Book> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("isbn",isbn).set("score", sumCount);
+        return bookMapper.update(null, updateWrapper);
     }
 
 }
