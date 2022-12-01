@@ -16,4 +16,10 @@ public class Apply {
     private int id;
     private String isbn;
     private int userid;
+    private String bookname;
+    private String author;
+    private String version;
+    private String type;
+    private String state;
+    private String introduction;
 }

@@ -1,12 +1,10 @@
 package com.example.backend.controller.bookApplication;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.backend.pojo.Book;
 import com.example.backend.service.bookApplication.ApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +15,9 @@ public class ApplyController {
     private ApplyService applyService;
 
     @PostMapping("/apply/")
-    public Map<String,String> applyABook(int uid,String isbn,String bookname)
+    public Map<String,String> applyABook(int uid, @RequestBody Book book)
     {
-        Map<String,String> m = applyService.applyABook(uid, isbn, bookname);
+        Map<String,String> m = applyService.applyABook(uid, book);
         return m;
     }
 
@@ -31,10 +29,10 @@ public class ApplyController {
     }
 
     @DeleteMapping("/apply/application/")
-    public Map<String,String> handleApplication(String isbn)
+    public Map<String,String> handleApplication(@RequestBody Book book)
     {
         Map<String,String> m = new HashMap<>();
-        m = applyService.handleApplication(isbn);
+        m = applyService.handleApplication(book);
         return m;
     }
 
