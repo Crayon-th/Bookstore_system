@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("orders")
 public class Orders {
     @TableId(type = IdType.AUTO)
     private Integer id;
