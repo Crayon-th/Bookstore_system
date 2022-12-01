@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface GetReviewService {
     List<BookReview> getReview(String isbn);
+
+    BookReview getOneReview(int id);
 }
