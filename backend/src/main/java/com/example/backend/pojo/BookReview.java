@@ -28,6 +28,7 @@ public class BookReview  implements Comparable<BookReview>{
     private String isbn;
     @TableField("targetID")
     private int targetID;
+    private float score;
 
     @Override
     public int compareTo(@NotNull BookReview o) {

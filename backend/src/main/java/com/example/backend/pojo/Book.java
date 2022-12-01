@@ -18,4 +18,5 @@ public class Book {
     private String introduction;
     private String version;
     private String author;
+    private float score;
 }
