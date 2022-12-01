@@ -21,4 +21,12 @@ public class GetReviewServiceImpl implements GetReviewService {
         Collections.sort(bookReviews);
         return bookReviews;
     }
+
+    @Override
+    public BookReview getOneReview(int id) {
+        QueryWrapper<BookReview> qw=new QueryWrapper<BookReview>();
+        qw.eq("id",id);
+        BookReview bookReview=bookReviewMapper.selectOne(qw);
+        return bookReview;
+    }
 }
