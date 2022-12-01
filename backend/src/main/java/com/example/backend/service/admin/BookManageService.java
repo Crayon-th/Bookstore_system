@@ -17,4 +17,6 @@ public interface BookManageService {
     Map<String,String> addbook(Book book);
 
     Map<String ,String> deletebook(String isbn);
+
+    int getScore(String isbn);
 }
