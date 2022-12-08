@@ -93,6 +93,14 @@ const routes = [
     name: "sellBook",
     component: () => import("@/views/SellBookView.vue"),
   },
+  {
+    meta: {
+      title: "chatroom",
+    },
+    path: "/chatroom",
+    name: "chatroom",
+    component: () => import("@/views/ChatroomView.vue"),
+  }
 ];
 
 const router = createRouter({
