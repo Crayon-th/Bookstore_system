@@ -6,6 +6,7 @@ import com.example.backend.service.bookReview.PostReviewService;
 import com.example.backend.utils.timeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,7 +17,7 @@ public class PostReviewController {
     private BookManageService bookManageService;
     private com.example.backend.utils.timeUtil timeUtil=new timeUtil();
     @PostMapping("/user/postReview/")
-    public int postReview(BookReview bookReview){
+    public int postReview(@RequestBody BookReview bookReview){
         bookReview.setDate(timeUtil.getCurrentTimeStamp());
         return postReviewService.postReview(bookReview);
     }

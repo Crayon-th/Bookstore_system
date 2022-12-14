@@ -6,6 +6,7 @@ import com.example.backend.service.admin.BookManageService;
 import com.example.backend.service.bookReview.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,7 +16,7 @@ public class ScoreController {
     @Autowired
     private BookManageService bookManageService;
     @PostMapping("/user/score/")
-    public int score(Score score){
+    public int score(@RequestBody Score score){
         int result=scoreService.score(score);
         bookManageService.getScore(score.getIsbn());
         return result;
