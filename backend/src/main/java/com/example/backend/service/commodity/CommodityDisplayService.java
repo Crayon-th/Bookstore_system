@@ -22,4 +22,6 @@ public interface CommodityDisplayService {
     IPage showMyCommodities(Integer id,long current,long size);
 
     IPage getCommoditiesByName(String bookName,long current,long size);
+
+    IPage getCommodityByOrder(int orderid,long current,long size);
 }

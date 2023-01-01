@@ -47,4 +47,11 @@ public class CommodityDisplayController {
     {
         return commodityDisplayService.getCommoditiesByName(bookName,current,size);
     }
+
+    @GetMapping("/commodity/commodityDisplay/order")
+    @ApiOperation(value = "用于投诉详情界面，根据投诉的订单id获得商品的详细信息")
+    public IPage getCommodityByOrder(int orderid,long current,long size)
+    {
+        return commodityDisplayService.getCommodityByOrder(orderid,current,size);
+    }
 }

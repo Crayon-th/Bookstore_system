@@ -20,6 +20,6 @@ public class Orders {
     private String createTime;
     private Integer sellerid;
     private Integer buyerid;
-
-
+    @TableField("commodityid")
+    private Integer commodityID;
 }

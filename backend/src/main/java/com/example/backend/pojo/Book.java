@@ -21,4 +21,5 @@ public class Book {
     private String version;
     private String author;
     private float score;
+    private String picurl;
 }

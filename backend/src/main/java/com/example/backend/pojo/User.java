@@ -1,6 +1,7 @@
 package com.example.backend.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -25,5 +26,6 @@ public class User {
     private Boolean enabled;
 
     private String seed;
-
+    @TableField(value = "dishonestTime")
+    private int dishonestTime;
 }

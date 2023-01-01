@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
         {
             return m;
         }
-        Orders orders = new Orders(null, commodity.getPrice(), time, commodity.getUid(), buyerid);
+        Orders orders = new Orders(null, commodity.getPrice(), time, commodity.getUid(), buyerid, commodity.getId());
         orderMapper.insert(orders);
         m.put("message","创建订单成功");
         return m;
