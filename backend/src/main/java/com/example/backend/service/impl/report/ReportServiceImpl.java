@@ -1,6 +1,8 @@
 package com.example.backend.service.impl.report;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.backend.mapper.ViolationReportMapper;
 import com.example.backend.pojo.ViolationReport;
 import com.example.backend.service.report.ReportService;
@@ -20,10 +22,11 @@ public class ReportServiceImpl implements ReportService{
     }
 
     @Override
-    public List<ViolationReport> getReports()
+    public IPage getReports(long current, long size)
     {
-        List<ViolationReport> reports = violationReportMapper.selectList(null);
-        return reports;
+        Page page = new Page(current,size);
+        IPage<ViolationReport> iPage = violationReportMapper.selectPage(page,null);
+        return iPage;
     }
 
     @Override
