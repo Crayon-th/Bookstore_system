@@ -36,6 +36,13 @@ export default defineConfig({
         secure: false, //false为http访问，true为https访问
         rewrite: (path) => path.replace(/^\/outer/, ""),
       },
+      "/bed": {
+        target: "https://api.superbed.cn/upload", //代理接口
+        changeOrigin: true,
+        ws: true,
+        secure: false, //false为http访问，true为https访问
+        rewrite: (path) => path.replace(/^\/bed/, ""),
+      },
     },
   },
 });

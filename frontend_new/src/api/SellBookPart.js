@@ -19,13 +19,6 @@ export function BookImage(file) {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-    // transformRequest: [
-    //   function (data, headers) {
-    //     // 去除post请求默认的Content-Type
-    //     delete headers.post["Content-Type"];
-    //     return data;
-    //   },
-    // ],
   });
 }
 
@@ -63,5 +56,19 @@ export function SellerGetOrder(data) {
     url: "/order/seller",
     method: "get",
     params: data,
+  });
+}
+
+//上传到图床
+export function PutPictrueInBed(file, params) {
+  return request({
+    method: "post",
+    url: "",
+    baseURL: "/bed",
+    data: file,
+    params: params,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
 }
