@@ -2,11 +2,20 @@
   <LayoutAuthenticated>
     <SectionMain>
       <!--标题-->
-      <SectionTitleLineWithButton
-        :icon="mdiShopping"
-        title="百觅一书 · 我的订单"
-        main
-      />
+      <div style="display: flex">
+        <SectionTitleLineWithButton
+          :icon="mdiShopping"
+          title="百觅一书 · 我的订单"
+          main
+        />
+        <div class="title-button">
+          <BaseButton
+            color="lightDark"
+            label="点我反馈"
+            @click="ClickMakeComments()"
+          />
+        </div>
+      </div>
 
       <div style="display: flex">
         <div class="buy-box">
@@ -89,6 +98,41 @@
         </div>
       </div>
     </SectionMain>
+
+    <!--反馈界面-->
+    <CardBoxModal
+      v-model="ShowMakeComments"
+      title="反馈意见"
+      button="success"
+      button-label="提交评论"
+      @confirm="ConfirmMakeComment()"
+    >
+      <div class="mt-8">
+        <FormField label="Comment Content" help="">
+          <FormControl
+            v-model="FeedbackContent"
+            type="tel"
+            placeholder="请输入友善的评论吧"
+          />
+        </FormField>
+      </div>
+    </CardBoxModal>
+    <!--成功提交-->
+    <CardBoxModal
+      v-model="showSubmit"
+      title="提交成功"
+      button="success"
+      @confirm="getSuccessConfirmInfo"
+    >
+    </CardBoxModal>
+    <!--出了点问题-->
+    <CardBoxModal
+      v-model="showProblem"
+      title="系统开小差了"
+      button="danger"
+      @confirm="getErrorConfirmInfo"
+    >
+    </CardBoxModal>
   </LayoutAuthenticated>
 </template>
 
@@ -97,11 +141,15 @@ import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionMain from "@/components/SectionMain.vue";
 import { ref, onMounted } from "vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
-import { mdiShopping } from "@mdi/js";
+import { mdiShopping, mdiArrowRight, mdiArrowLeft } from "@mdi/js";
 import BaseButton from "@/components/BaseButton.vue";
 import CardBox from "@/components/CardBox.vue";
 import { useMainStore } from "@/stores/main.js";
 import { BuyerGetOrder, SellerGetOrder } from "@/api/SellBookPart.js";
+import { UserFeedBack } from "@/api/reportPart.js";
+import CardBoxModal from "@/components/CardBoxModal.vue";
+import FormField from "@/components/FormField.vue";
+import FormControl from "@/components/FormControl.vue";
 
 const SizeOnePage = ref(2);
 
@@ -113,6 +161,56 @@ var MaxSellPage = ref(1);
 
 var BuyOrderList = ref([]);
 var SellOrderList = ref([]);
+
+//显示提意见窗口
+const ShowMakeComments = ref(false);
+//提出意见的内容
+var FeedbackContent = ref("");
+//点击提出意见
+const ClickMakeComments = () => {
+  //
+  ShowMakeComments.value = true;
+};
+//结束提出意见
+const ConfirmMakeComment = () => {
+  //
+  ShowMakeComments.value = false;
+  //如果评论不为空
+  if (FeedbackContent.value != "") {
+    //发送的反馈
+    let data = {
+      id: 0,
+      userid: mainStore.userId,
+      content: FeedbackContent.value,
+      handle: false,
+      createtime: "",
+    };
+    //发送反馈
+    UserFeedBack(data)
+      .then((response) => {
+        console.log(response);
+        showSubmit.value = true;
+      })
+      .catch((error) => {
+        showProblem.value = true;
+        console.log(error);
+      });
+  }
+};
+//显示提交成功
+const showSubmit = ref(false);
+//显示提交失败
+const showProblem = ref(false);
+//结束成功窗口
+const getSuccessConfirmInfo = () => {
+  //
+  showSubmit.value = false;
+};
+//结束失败窗口
+const getErrorConfirmInfo = () => {
+  //
+  showProblem.value = false;
+};
 
 const mainStore = useMainStore();
 
@@ -261,5 +359,10 @@ onMounted(() => {
   width: 35%;
   position: absolute;
   left: 60%;
+}
+
+.title-button {
+  position: relative;
+  left: 62%;
 }
 </style>

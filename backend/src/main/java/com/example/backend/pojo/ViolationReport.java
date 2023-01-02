@@ -23,9 +23,8 @@ public class ViolationReport {
     private Integer violationType;
     @TableField("violationDescription")
     private String violationDescription;
-    private String evidence;
     private String date;
-    @TableField("reportedID")
-    private Integer reportedID;
+    @TableField("bookreviewid")
+    private Integer bookreviewid;
 
 }
