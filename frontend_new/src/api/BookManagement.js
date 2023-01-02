@@ -65,3 +65,13 @@ export function DeleteApply(data) {
 }
 
 //上传图床
+
+//通过外部api获取信息
+export function GetInfoFromWeb(data) {
+  return request({
+    url: "/9787220126437",
+    baseURL: "/xyz",
+    method: "get",
+    params: data,
+  });
+}
