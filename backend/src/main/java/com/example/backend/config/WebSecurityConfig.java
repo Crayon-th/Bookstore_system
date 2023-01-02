@@ -106,7 +106,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //允许匿名及登录用户访问
                 .antMatchers("/api/auth/**", "/error/**","/api/admin/**",
                         "/admin/**","/user/**","/apply/**","/swagger-resources/**"
-                         ,"swagger-ui.html#","/ws/**","/socket/**").permitAll()
+                         ,"swagger-ui.html#","/ws/**","/socket/**","/api/bookReview/**","/api/comment/**"
+                        ).permitAll()
                 // 所有请求都需要认证
                 .anyRequest().authenticated()
                 .and().apply(securityConfigurerAdapter());

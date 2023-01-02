@@ -11,5 +11,7 @@ public interface ApplyService {
 
     IPage getApplication(long current,long size);
 
-    Map<String,String> handleApplication(@RequestBody Book book);
+    Map<String,String> handleApplication(Book book);
+
+    void deleteApplication(int id);
 }

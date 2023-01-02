@@ -95,4 +95,9 @@ public class ApplyServiceImpl implements ApplyService {
             return m;
         }
     }
+
+    @Override
+    public void deleteApplication(int id) {
+        applyMapper.deleteById(id);
+    }
 }

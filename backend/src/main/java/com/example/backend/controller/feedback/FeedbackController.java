@@ -3,6 +3,7 @@ package com.example.backend.controller.feedback;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.backend.pojo.Feedback;
 import com.example.backend.service.feedback.FeedbackService;
+import com.example.backend.utils.timeUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService;
 
+    private timeUtil time = new timeUtil();
     @GetMapping("/api/feedback")
     @ApiOperation(value = "根据id获取feedback")
     public Feedback getFeedback(int id)
@@ -37,6 +39,7 @@ public class FeedbackController {
     public Map<String,String> giveFeedback(@RequestBody Feedback feedback)
     {
         feedback.setHandle(false);
+        feedback.setCreatetime(time.getCurrentTimeStamp());
         Map<String,String> m = feedbackService.giveFeedBack(feedback);
         return m;
     }
