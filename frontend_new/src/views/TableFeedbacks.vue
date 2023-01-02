@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, onMounted } from "vue";
-import { useMainStore } from "@/stores/main";
+// import { useMainStore } from "@/stores/main";
 import { mdiEye } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
@@ -8,13 +8,13 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
-import {GetFeedback, FinishFeedback} from "@/api/reportPart.js";
+import { GetFeedback, FinishFeedback } from "@/api/reportPart.js";
 
 defineProps({
   checkable: Boolean,
 });
 
-const mainStore = useMainStore();
+// const mainStore = useMainStore();
 
 const feedbackList = ref([]);
 
@@ -22,7 +22,7 @@ const items = computed(() => feedbackList.value);
 
 let isModalActive = ref(false);
 
-let isModalDangerActive = ref(false);
+// let isModalDangerActive = ref(false);
 
 const perPage = ref(5);
 
@@ -38,12 +38,12 @@ const itemsPaginated = computed(() =>
 );
 
 let detail = {
-  content : "",
-  createtime : "",
+  content: "",
+  createtime: "",
   handle: false,
   id: 0,
   userid: 0,
-}
+};
 
 const numPages = computed(() => Math.ceil(items.value.length / perPage.value));
 
@@ -74,9 +74,9 @@ onMounted(() => {
 
 const GetFeedbackList = () => {
   let data = {
-      current: 1,
-      size: 20,
-    };
+    current: 1,
+    size: 20,
+  };
   GetFeedback(data)
     .then((response) => {
       feedbackList.value = response.data.records;
@@ -85,8 +85,7 @@ const GetFeedbackList = () => {
     .catch((error) => {
       console.log(error);
     });
-
-}
+};
 
 const remove = (arr, cb) => {
   const newArr = [];
@@ -115,14 +114,14 @@ const getSubmitConfirm = (Info) => {
   showSubmit.value = false;
   showProblem.value = false;
   console.log(Info);
-}
+};
 
 const submitFinish = (val) => {
   console.log(val);
   isModalActive.value = false;
   let data = {
     id: detail.id,
-  }
+  };
   console.log(data);
   FinishFeedback(data)
     .then((response) => {
@@ -131,8 +130,7 @@ const submitFinish = (val) => {
         //提交成功
         isModalActive.value = false;
         showSubmit.value = true;
-      }
-      else {
+      } else {
         errorTip.value = response.data.message;
         isModalActive.value = false;
         showProblem.value = true;
@@ -154,8 +152,7 @@ const submitFinish = (val) => {
   // .catch((error) => {
   //   console.log(error);
   // });
-
-}
+};
 
 const checkFeedback = (feedback) => {
   isModalActive.value = true;
@@ -164,18 +161,33 @@ const checkFeedback = (feedback) => {
   detail.handle = feedback.handle;
   detail.id = feedback.id;
   detail.userid = feedback.userid;
-}
+};
 </script>
 
 <template>
-  <CardBoxModal v-model="showSubmit" @confirm="getSubmitConfirm" title="提交成功" button="success">
+  <CardBoxModal
+    v-model="showSubmit"
+    title="提交成功"
+    button="success"
+    @confirm="getSubmitConfirm"
+  >
   </CardBoxModal>
-  <CardBoxModal v-model="showProblem" @confirm="getSubmitConfirm" title="系统开小差了" button="danger">
+  <CardBoxModal
+    v-model="showProblem"
+    title="系统开小差了"
+    button="danger"
+    @confirm="getSubmitConfirm"
+  >
     <p>{{ errorTip }}</p>
   </CardBoxModal>
-  <CardBoxModal v-model="isModalActive" @confirm="submitFinish" title="反馈详情" buttonLabel="完成记录">
+  <CardBoxModal
+    v-model="isModalActive"
+    title="反馈详情"
+    button-label="完成记录"
+    @confirm="submitFinish"
+  >
     <div class="mt-6">
-        <p class="font-bold">反馈内容: {{detail.content}}</p>
+      <p class="font-bold">反馈内容: {{ detail.content }}</p>
     </div>
   </CardBoxModal>
 

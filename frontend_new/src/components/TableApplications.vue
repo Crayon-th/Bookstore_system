@@ -8,7 +8,7 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
-import { AddNewBook, GetApply, DeleteApply} from "@/api/BookManagement.js";
+import { AddNewBook, GetApply, DeleteApply, GetInfoFromWeb} from "@/api/BookManagement.js";
 
 defineProps({
   checkable: Boolean,
@@ -189,6 +189,34 @@ const deleteApply = (data) => {
   });
 
 }
+
+const submitThroughAPI = () => {
+  let data = {
+    apikey: "14710.44cdfaf05e61e5290a099b2968873716.3a3f1843c5ca1e7e181e74f74440f1ec"
+  }
+  console.log(data);
+  GetInfoFromWeb(data)
+    .then((response) => {
+      console.log(response);
+      if (response.msg == "请求成功") {
+        //提交成功
+        isModalActive.value = false;
+        showSubmit.value = true;
+      }
+      else {
+        // errorTip.value = response.data.message;
+        isModalActive.value = false;
+        showProblem.value = true;
+      }
+    })
+    .catch((error) => {
+      //提交失败
+      errorTip.value = "网络问题";
+      isModalActive.value = false;
+      showProblem.value = true;
+      console.log(error);
+    });
+}
 </script>
 
 <template>
@@ -222,6 +250,7 @@ const deleteApply = (data) => {
             label="API添加"
             color="success"
             small
+            @click="submitThroughAPI"
           />
         </BaseButtons>
     </div>

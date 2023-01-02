@@ -70,7 +70,7 @@ export function DeleteApply(data) {
 export function GetInfoFromWeb(data) {
   return request({
     url: "/9787220126437",
-    baseURL: "/xyz",
+    baseURL: "/outer",
     method: "get",
     params: data,
   });

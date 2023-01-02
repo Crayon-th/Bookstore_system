@@ -20,6 +20,7 @@ export default defineConfig({
     cors: true, // 默认启用并允许任何源
     host: true,
     open: true, // 在服务器启动时自动在浏览器中打开应用程序
+    ssr: false,
     //反向代理配置，注意rewrite写法，开始没看文档在这里踩了坑
     proxy: {
       "/api": {
@@ -27,6 +28,13 @@ export default defineConfig({
         changeOrigin: true,
         ws: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+      "/outer": {
+        target: "https://api.jike.xyz/situ/book/isbn/", //代理接口
+        changeOrigin: true,
+        ws: true,
+        secure: false, //false为http访问，true为https访问
+        rewrite: (path) => path.replace(/^\/outer/, ""),
       },
     },
   },
