@@ -20,7 +20,7 @@ public class ViolationReport {
     @TableField("reportID")
     private Integer reportID;
     @TableField("violationType")
-    private Integer violationType;
+    private String violationType;
     @TableField("violationDescription")
     private String violationDescription;
     private String date;
