@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+import PiniaPluginPersist from "pinia-plugin-persist";
 
 import App from "./App.vue";
 import router from "./router";
@@ -11,6 +12,7 @@ import "./css/main.css";
 
 /* Init Pinia */
 const pinia = createPinia();
+pinia.use(PiniaPluginPersist);
 
 /* Create Vue app */
 createApp(App).use(router).use(pinia).mount("#app");
@@ -36,7 +38,7 @@ if (
 }
 
 /* Default title tag */
-const defaultDocumentTitle = "Admin One Vue 3 Tailwind";
+const defaultDocumentTitle = "百觅一书";
 
 /* Set document title from route meta */
 router.afterEach((to) => {

@@ -1,24 +1,35 @@
-import { mdiAccount, mdiEmail, mdiLogout, mdiThemeLightDark } from "@mdi/js";
+import {
+  mdiAccount,
+  mdiCogOutline,
+  mdiEmail,
+  mdiLogout,
+  mdiThemeLightDark,
+} from "@mdi/js";
 
 export default [
   {
     isCurrentUser: true,
+    isUnauthenticated:false,
     menu: [
       {
         icon: mdiAccount,
-        label: "个人中心",
+        label: "My Profile",
         to: "/profile",
       },
       {
+        icon: mdiCogOutline,
+        label: "Settings",
+      },
+      {
         icon: mdiEmail,
-        label: "我的信息",
+        label: "Messages",
       },
       {
         isDivider: true,
       },
       {
         icon: mdiLogout,
-        label: "退出登录",
+        label: "Log Out",
         isLogout: true,
       },
     ],

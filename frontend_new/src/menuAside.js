@@ -1,44 +1,34 @@
 import {
   mdiAccountCircle,
-  mdiMonitor,
+  mdiBookOpenPageVariant,
+  mdiMessage,
   mdiLock,
   mdiSquareEditOutline,
-  mdiTable,
   mdiTelevisionGuide,
-  mdiStackExchange,
-  mdiBook,
+  mdiShoppingOutline,
+  mdiCart,
 } from "@mdi/js";
 
 export default [
   {
     to: "/",
-    label: "书籍交易",
-    icon: mdiBook,
+    label: "交易市场",
+    icon: mdiShoppingOutline,
   },
   {
-    to: "/responsive",
-    label: "书籍交流",
-    icon: mdiStackExchange,
+    to: "/reading",
+    label: "阅·读",
+    icon: mdiBookOpenPageVariant,
   },
   {
-    to: "/profile",
-    label: "个人中心",
-    icon: mdiAccountCircle,
-  },
-  {
-    to: "/login",
-    label: "用户登录",
-    icon: mdiLock,
+    to: "/tables",
+    label: "我的消息",
+    icon: mdiMessage,
   },
   // {
-  //   to: "/dashboard",
-  //   icon: mdiMonitor,
-  //   label: "Dashboard",
-  // },
-  // {
-  //   to: "/tables",
-  //   label: "Tables",
-  //   icon: mdiTable,
+  //   to: "/login",
+  //   label: "用户登录",
+  //   icon: mdiLock,
   // },
   {
     to: "/userRegistration",
@@ -46,8 +36,37 @@ export default [
     icon: mdiSquareEditOutline,
   },
   {
+    to: "/myOrder",
+    label: "订单中心",
+    icon: mdiCart,
+  },
+  {
     to: "/ui",
     label: "UI",
     icon: mdiTelevisionGuide,
   },
+  // {
+  //   label: "Dropdown",
+  //   icon: mdiViewList,
+  //   menu: [
+  //     {
+  //       label: "Item One",
+  //     },
+  //     {
+  //       label: "Item Two",
+  //     },
+  //   ],
+  // },
+  // {
+  //   href: "https://github.com/justboil/admin-one-vue-tailwind",
+  //   label: "GitHub",
+  //   icon: mdiGithub,
+  //   target: "_blank",
+  // },
+  // {
+  //   href: "https://github.com/justboil/admin-one-react-tailwind",
+  //   label: "React version",
+  //   icon: mdiReact,
+  //   target: "_blank",
+  // },
 ];

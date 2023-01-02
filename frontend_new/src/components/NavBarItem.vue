@@ -22,6 +22,7 @@
         v-if="item.isCurrentUser"
         class="w-6 h-6 mr-3 inline-flex"
       />
+      <BaseIcon v-if="item.isUnauthenticated" :path="item.isUnauthenticated"></BaseIcon>
       <BaseIcon v-if="item.icon" :path="item.icon" class="transition-colors" />
       <span
         class="px-2 transition-colors"

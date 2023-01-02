@@ -2,6 +2,7 @@
 import { mdiUpload } from "@mdi/js";
 import { computed, ref, watch } from "vue";
 import BaseButton from "@/components/BaseButton.vue";
+import { BookImage } from "@/api/SellBookPart.js";
 
 const props = defineProps({
   modelValue: {
@@ -27,7 +28,7 @@ const props = defineProps({
   isRoundIcon: Boolean,
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["bookimg"]);
 
 const root = ref(null);
 
@@ -50,36 +51,22 @@ const upload = (event) => {
 
   file.value = value[0];
 
-  emit("update:modelValue", file.value);
-
   // Use this as an example for handling file uploads
-  // let formData = new FormData()
-  // formData.append('file', file.value)
+  let formData = new FormData();
+  formData.append("picture", file.value);
 
-  // const mediaStoreRoute = `/your-route/`
-
-  // axios
-  //   .post(mediaStoreRoute, formData, {
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data'
-  //     },
-  //     onUploadProgress: progressEvent
-  //   })
-  //   .then(r => {
-  //
-  //   })
-  //   .catch(err => {
-  //
-  //   })
+  BookImage(formData)
+    .then((response) => {
+      let emitData = {
+        bookimg: response.data,
+      };
+      emit("bookimg", emitData);
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
-
-// const uploadPercent = ref(0)
-//
-// const progressEvent = progressEvent => {
-//   uploadPercent.value = Math.round(
-//     (progressEvent.loaded * 100) / progressEvent.total
-//   )
-// }
 </script>
 
 <template>

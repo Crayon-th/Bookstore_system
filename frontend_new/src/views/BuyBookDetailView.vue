@@ -120,8 +120,9 @@ var errorTip = ref("");
 var sureBuy = ref(false);
 var showProblem = ref(false);
 const SureBuy = () => {
-  let buyer = { buyerid: 1 };
+  let buyer = { buyerid: mainStore.userId };
   let data = {
+    id: BookDetail.value.id,
     isbn: BookDetail.value.isbn,
     bookName: BookDetail.value.bookName,
     author: BookDetail.value.author,

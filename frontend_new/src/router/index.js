@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-//import Style from "@/views/StyleView.vue";
+import Style from "@/views/StyleView.vue";
 import Home from "@/views/HomeView.vue";
 
 const routes = [
@@ -23,11 +23,43 @@ const routes = [
   },
   {
     meta: {
-      title: "Tables",
+      title: "Reading",
     },
-    path: "/tables",
-    name: "tables",
-    component: () => import("@/views/TablesView.vue"),
+    path: "/reading",
+    name: "reading",
+    component: () => import("@/views/ReadingView.vue"),
+  },
+  {
+    meta: {
+      title: "BookAdding",
+    },
+    path: "/Adding",
+    name: "Adding",
+    component: () => import("@/views/AddBookView.vue")
+  },
+  {
+    meta: {
+      title: "BookDetail",
+    },
+    path: "/details",
+    name: "details",
+    component: () => import("@/views/BookDetailView.vue")
+  },
+  {
+    meta: {
+      title: "Orders",
+    },
+    path: "/orders",
+    name: "orders",
+    component: () => import("@/views/OrderView.vue")
+  },
+  {
+    meta: {
+      title: "AdministratorView",
+    },
+    path: "/administrator",
+    name: "AdministratorView",
+    component: () => import("@/views/AdministratorView.vue")
   },
   {
     meta: {
@@ -40,6 +72,70 @@ const routes = [
   {
     meta: {
       title: "个人中心",
+    },
+    path: "/profile",
+    name: "profile",
+    component: () => import("@/views/ProfileView.vue"),
+  },  
+  {
+    meta: {
+      title: "用户登录",
+    },
+    path: "/login",
+    name: "login",
+    component: () => import("@/views/LoginView.vue"),
+  },
+  {
+    meta: {
+      title: "商品详情",
+    },
+    path: "/buyBookDetail",
+    name: "buyBookDetail",
+    component: () => import("@/views/BuyBookDetailView.vue"),
+  },
+  {
+    meta: {
+      title: "我要售书",
+    },
+    path: "/sellBook",
+    name: "sellBook",
+    component: () => import("@/views/SellBookView.vue"),
+  },
+  {
+    meta: {
+      title: "我的订单",
+    },
+    path: "/myOrder",
+    name: "myOrder",
+    component: () => import("@/views/MyOrderView.vue"),
+  },
+  {
+    meta: {
+      title: "我的待售",
+    },
+    path: "/bookForSale",
+    name: "bookForSale",
+    component: () => import("@/views/BookForSaleView.vue"),
+  },
+  {
+    meta: {
+      title: "Chatting",
+    },
+    path: "/chatting",
+    name: "chatting",
+    component: () => import("@/views/ChatRoomView.vue"),
+  },
+  {
+    meta: {
+      title: "Tables",
+    },
+    path: "/tables",
+    name: "tables",
+    component: () => import("@/views/TablesView.vue"),
+  },
+  {
+    meta: {
+      title: "Profile",
     },
     path: "/profile",
     name: "profile",
@@ -63,44 +159,12 @@ const routes = [
   },
   {
     meta: {
-      title: "用户登录",
-    },
-    path: "/login",
-    name: "login",
-    component: () => import("@/views/LoginView.vue"),
-  },
-  {
-    meta: {
       title: "Error",
     },
     path: "/error",
     name: "error",
     component: () => import("@/views/ErrorView.vue"),
   },
-  {
-    meta: {
-      title: "商品详情",
-    },
-    path: "/buyBookDetail",
-    name: "buyBookDetail",
-    component: () => import("@/views/BuyBookDetailView.vue"),
-  },
-  {
-    meta: {
-      title: "我要售书",
-    },
-    path: "/sellBook",
-    name: "sellBook",
-    component: () => import("@/views/SellBookView.vue"),
-  },
-  {
-    meta: {
-      title: "chatroom",
-    },
-    path: "/chatroom",
-    name: "chatroom",
-    component: () => import("@/views/ChatroomView.vue"),
-  }
 ];
 
 const router = createRouter({

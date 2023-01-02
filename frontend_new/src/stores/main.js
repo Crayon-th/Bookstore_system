@@ -1,14 +1,16 @@
 import { defineStore } from "pinia";
+import PiniaPluginPersist from "pinia-plugin-persist";
 import axios from "axios";
 
 export const useMainStore = defineStore("main", {
   state: () => ({
     /* User */
+    userId: "",
+    userName: "",
+    userEmail: "",
+    userAvatar: null,
     userToken: "",
-    userName: "请登录",
-    userEmail: "@example.com",
-    userAvatar:
-      "https://avatars.dicebear.com/api/avataaars/example.svg?options[top][]=shortHair&options[accessoriesChance]=93",
+    isAuthenticated: false,
 
     /* Field focus with ctrl+k (to register only once) */
     isFieldFocusRegistered: false,
@@ -19,6 +21,9 @@ export const useMainStore = defineStore("main", {
   }),
   actions: {
     setUser(payload) {
+      if (payload.id) {
+        this.userId = payload.id;
+      }
       if (payload.name) {
         this.userName = payload.name;
       }
@@ -28,6 +33,23 @@ export const useMainStore = defineStore("main", {
       if (payload.avatar) {
         this.userAvatar = payload.avatar;
       }
+      if (payload.Token) {
+        this.userToken = payload.Token;
+      }
+      if (payload.Token) {
+        this.isAuthenticated = payload.isAuthenticated;
+      }
+    },
+
+    LogOut() {
+      console.log(this.userName);
+      localStorage.clear();
+      this.userId = "";
+      this.userName = "";
+      this.userEmail = "";
+      this.userAvatar = null;
+      this.userToken = "";
+      this.isAuthenticated = false;
     },
 
     fetch(sampleDataKey) {
@@ -43,4 +65,7 @@ export const useMainStore = defineStore("main", {
         });
     },
   },
+  persist:{
+    enabled: true,
+  }
 });

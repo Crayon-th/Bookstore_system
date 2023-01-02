@@ -9,31 +9,58 @@ import FormControl from "@/components/FormControl.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
+import CardBoxModal from "@/components/CardBoxModal.vue";
 import { useMainStore } from "@/stores/main.js";
-// import { Register } from "@/api/LoginApi.js";
+import { UserLogin } from "@/api/LoginApi.js";
+import { ref } from "vue";
 
 const form = reactive({
   login: "",
   pass: "",
-  remember: true,
 });
 
 const router = useRouter();
 
+let showProblem = ref(false);
+
 const submit = () => {
-  useMainStore().setUser({
-    name: "John",
-    email: "john@example.com",
-    avatar:
-      "https://avatars.dicebear.com/api/avataaars/example.svg?options[top][]=shortHair&options[accessoriesChance]=93",
-  });
-  router.push("/");
+  //传输输入信息
+  let UserInfo = {
+    username: form.login,
+    password: form.pass,
+  };
+  UserLogin(UserInfo)
+    .then((response) => {
+      //存储用户信息
+      useMainStore().setUser({
+        name: response.data.user.user.username,
+        email: response.data.user.user.email,
+        id: response.data.user.user.id,
+        Token: response.data.token,
+        avatar: response.data.user.user.seed,
+        isAuthenticated: true,
+      });
+      //页面跳转
+      router.push("/");
+    })
+    .catch((error) => {
+      //弹窗
+      showProblem.value = true;
+      console.log(error);
+    });
 };
 </script>
 
 <template>
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
+      <!--显示登录出错-->
+      <CardBoxModal
+        v-model="showProblem"
+        title="登录失败请检查用户名和密码"
+        button="danger"
+      >
+      </CardBoxModal>
       <CardBox :class="cardClass" is-form>
         <FormField label="用户名" help="请输入您的用户名">
           <FormControl

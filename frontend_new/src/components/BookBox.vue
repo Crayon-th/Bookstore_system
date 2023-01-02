@@ -69,7 +69,7 @@ const props = defineProps({
     default: "未知",
   },
   bookPrice: {
-    type: String,
+    type: Number,
     default: "暂无价格",
   },
 });

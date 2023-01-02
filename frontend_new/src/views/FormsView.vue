@@ -33,8 +33,10 @@
         <FormField label="设置密码">
           <FormControl
             v-model="form.password"
-            type="tel"
+            type="password"
             placeholder="请输入密码"
+            name="password"
+            autocomplete="current-password"
           />
         </FormField>
 
@@ -74,21 +76,32 @@ import BaseButton from "@/components/BaseButton.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
-import { GetEmailCode } from "@/api/LoginApi.js";
+import { useMainStore } from "@/stores/main.js";
+import { GetEmailCode, Register } from "@/api/LoginApi.js";
+
+const mainStore = useMainStore();
 
 const form = reactive({
-  username: "John Doe",
-  email: "john.doe@example.com",
+  username: "Your Name",
+  email: "Your.Address@example.com",
   password: "",
   code: "",
 });
 
 const Submit = () => {
-  //
+  let data = form;
+  Register(data)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 const GetCode = () => {
   var email = { email: form.email };
+  console.log(email);
   GetEmailCode(email)
     .then((response) => {
       console.log(response);

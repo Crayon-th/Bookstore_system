@@ -9,7 +9,7 @@
     <SectionMain>
       <SectionTitleLineWithButton
         :icon="mdiBallotOutline"
-        title="百觅一书 · 我要售书"
+        title="百觅一书 · 书籍申请"
         main
       >
       </SectionTitleLineWithButton>
@@ -18,16 +18,16 @@
           <FormControl
             v-model="form.isbn"
             type="tel"
-            placeholder="请在此处输入isbn"
+            placeholder="请在此处输入书籍的isbn码"
           />
         </FormField>
         <BaseDivider />
 
         <FormField label="书籍名称" help="要出售书籍的名称">
           <FormControl
-            v-model="form.bookName"
+            v-model="form.bookname"
             type="tel"
-            placeholder="请在此处输入要出售书籍的名称"
+            placeholder="请在此处输入申请书籍的名称"
           />
         </FormField>
         <BaseDivider />
@@ -50,37 +50,36 @@
         </FormField>
         <BaseDivider />
 
-        <FormField label="损坏情况" help="描述书籍的损坏情况">
+        <FormField label="书籍类型" help="描述书籍的类型题材">
           <FormControl
-            v-model="form.damageCondition"
+            v-model="form.type"
             type="tel"
-            placeholder="请在此处描述书籍的损坏情况"
+            placeholder="请在此处输入书籍的类型题材..."
           />
         </FormField>
         <BaseDivider />
 
-        <FormField label="新旧程度" help="描述书籍的新旧程度">
+        <FormField label="书籍状态" help="请输入书籍的状态">
           <FormControl
-            v-model="form.agingCondition"
+            v-model="form.state"
             type="tel"
-            placeholder="请在此处描述书籍的新旧程度"
+            placeholder="请输入书籍的状态"
           />
         </FormField>
         <BaseDivider />
 
-        <FormField label="书籍价格" help="给出您预期的价格">
+        <FormField label="书籍简介">
           <FormControl
-            v-model="form.price"
-            type="tel"
-            placeholder="请在此处给出您预期的价格"
+            v-model="form.introduction"
+            type="textarea"
+            placeholder="请在此处输入书籍的简介"
           />
         </FormField>
-        <BaseDivider />
 
-        <FormField help="Max 2MB">
-          <FormFilePicker label="上传书籍封面" @bookimg="GetBookUrl" />
-        </FormField>
-        <BaseDivider />
+        <!-- <FormField help="Max 2MB">
+            <FormFilePicker label="上传书籍封面" @bookimg="GetBookUrl" />
+          </FormField>
+          <BaseDivider /> -->
 
         <template #footer>
           <BaseButtons>
@@ -88,7 +87,7 @@
               type="submit"
               color="info"
               label="提交"
-              @click="submit"
+              @click="submitApplication"
             />
             <BaseButton
               type="reset"
@@ -101,9 +100,9 @@
         </template>
       </CardBox>
 
-      <CardBox class="mb-6" @click="BookForSale">
-        <p class="text-2xl" align="center">我 的 待 售</p>
-      </CardBox>
+      <!-- <CardBox class="mb-6" @click="BookForSale">
+          <p class="text-2xl" align="center">我 的 待 售</p>
+        </CardBox> -->
     </SectionMain>
   </LayoutAuthenticated>
 </template>
@@ -121,32 +120,22 @@ import BaseButtons from "@/components/BaseButtons.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
 import CardBoxModal from "@/components/CardBoxModal.vue";
-import { TradeBook } from "@/api/SellBookPart.js";
-import FormFilePicker from "@/components/FormFilePicker.vue";
+import {ApplyNewBook } from "@/api/BookManagement.js";
+//import FormFilePicker from "@/components/FormFilePicker.vue";
 import { useMainStore } from "@/stores/main.js";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
-import OSS from "ali-oss";
+// import { useRouter } from "vue-router";
 const mainStore = useMainStore();
 
 const form = reactive({
   isbn: "",
-  bookName: "",
+  bookname: "",
   author: "",
   version: "",
-  imageurl: "",
-  createTime: "",
-  damageCondition: "",
-  agingCondition: "",
-  price: 0,
-  uid: mainStore.userId,
-  isFinished: false,
+  type: "",
+  state: "",
+  introduction: "",
 });
-
-const getConfirmInfo = (Info) => {
-  showSubmit.value = false;
-  console.log(Info);
-}
 
 //错误提示
 var errorTip = ref("");
@@ -154,88 +143,50 @@ var errorTip = ref("");
 var showSubmit = ref(false);
 //显示提交失败
 var showProblem = ref(false);
-const submit = () => {
-  put();
-  var uidIn = { uid: mainStore.userId };
+
+const getConfirmInfo = (Info) => {
+  showSubmit.value = false;
+  showProblem.value = false;
+  console.log(Info);
+}
+
+const submitApplication = () => {
   var data = form;
-  TradeBook(uidIn, data)
+  let param = {
+    "uid": mainStore.userId,
+  }
+  console.log(data);
+  ApplyNewBook(data, param)
     .then((response) => {
       console.log(response);
-      if (response.data.提示 == "上传书本成功") {
-        //购买成功
+      if (response.data.message == "申请成功") {
+        //提交成功
         showSubmit.value = true;
       } else {
-        errorTip.value = response.data.提示;
+        errorTip.value = response.data.message;
         showProblem.value = true;
       }
     })
     .catch((error) => {
-      //购买失败
+      //提交失败
       errorTip.value = "网络问题";
       showProblem.value = true;
       console.log(error);
     });
 };
 
-const GetBookUrl = (val) => {
-  form.imageurl = val.bookimg;
-  console.log(form.imageurl);
-};
+//   const GetBookUrl = (val) => {
+//     form.imageurl = val.bookimg;
+//     console.log(form.imageurl);
+//   };
 
 const cleanAll = () => {
   form.isbn = "";
   form.bookName = "";
   form.author = "";
   form.version = "";
-  form.imageurl = "";
   form.createTime = "";
-  form.damageCondition = "";
-  form.agingCondition = "";
+  form.type = "";
   form.price = 0;
 };
-
-const router = useRouter();
-const BookForSale = () => {
-  if (mainStore.userName == "请登录") {
-    router.push("/login");
-  } else {
-    router.push("/bookForSale");
-  }
-};
-
-
-const client = new OSS({
-  // yourregion填写Bucket所在地域。以华东1（杭州）为例，Region填写为oss-cn-hangzhou。
-  region: 'oss-cn-shanghai',
-  // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-  accessKeyId: 'LTAI5tLKDfAjWxMZQeUbDkDp',
-  accessKeySecret: 'U07VCefFJvpg2JZPAcXeu9MaqAQp7X',
-  // 填写Bucket名称。
-  bucket: 'bucket-for-picgo-of-pikachu',
-});
-
-const headers = {
-  // 指定Object的存储类型。
-  'x-oss-storage-class': 'Standard',
-  // 指定Object的访问权限。
-  'x-oss-object-acl': 'private',
-  // 设置Object的标签，可同时设置多个标签。
-  'x-oss-tagging': 'Tag1=1&Tag2=2',
-  // 指定PutObject操作时是否覆盖同名目标Object。此处设置为true，表示禁止覆盖同名Object。
-  'x-oss-forbid-overwrite': 'true',
-};
-
-async function put () {
-  try {
-    // 填写OSS文件完整路径和本地文件的完整路径。OSS文件完整路径中不能包含Bucket名称。
-    // 如果本地文件的完整路径中未指定本地路径，则默认从示例程序所属项目对应本地路径中上传文件。
-    const result = await client.multipartUpload('pikachu.jpg', 'C:\\Users\\86137\\Pictures\\pikachu.jpg'
-    // 自定义headers
-    ,{headers}
-    );
-    console.log(result);
-  } catch (e) {
-    console.log(e);
-  }
-}
 </script>

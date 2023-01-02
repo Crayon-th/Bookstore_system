@@ -4,12 +4,23 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import menuAside from "@/menuAside.js";
 import menuNavBar from "@/menuNavBar.js";
+import menuNavBarUnauthenticated from "@/menuNavBarUnauthenticated.js";
+import { useMainStore } from "@/stores/main.js";
 import { useStyleStore } from "@/stores/style.js";
 import BaseIcon from "@/components/BaseIcon.vue";
 import FormControl from "@/components/FormControl.vue";
 import NavBar from "@/components/NavBar.vue";
 import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
 import AsideMenu from "@/components/AsideMenu.vue";
+import FooterBar from "@/components/FooterBar.vue";
+
+// useMainStore().setUser({
+//   name: "John Doe",
+//   email: "john@example.com",
+//   avatar:
+//     "https://avatars.dicebear.com/api/adventurer/fgf.svg",
+// });
+const mainStore = useMainStore();
 
 const layoutAsidePadding = "xl:pl-60";
 
@@ -29,9 +40,20 @@ const menuClick = (event, item) => {
   if (item.isToggleLightDark) {
     styleStore.setDarkMode();
   }
-
   if (item.isLogout) {
-    //
+    useMainStore().LogOut();
+  }
+  if (item.isLogIn) {
+    router.push("/login");
+  }
+  if (item.isRegister) {
+    router.push("/userRegistration");
+  }
+  if (item.isRead) {
+    router.push("/reading");
+  }
+  if (item.isShopping) {
+    router.push("/");
   }
 };
 </script>
@@ -45,10 +67,9 @@ const menuClick = (event, item) => {
   >
     <div
       :class="[layoutAsidePadding, { 'ml-60 lg:ml-0': isAsideMobileExpanded }]"
-      class="pt-14 min-h-screen w-screen transition-position lg:w-auto bg-gray-50 dark:bg-slate-800 dark:text-slate-100"
+      class="pt-14 min-h-screen w-screen transition-position lg:w-auto bg-indigo-50 dark:bg-slate-800 dark:text-slate-100"
     >
-      <!--上方栏位，被menuNarBar.js控制-->
-      <NavBar
+      <NavBar v-if="mainStore.isAuthenticated"
         :menu="menuNavBar"
         :class="[
           layoutAsidePadding,
@@ -56,7 +77,6 @@ const menuClick = (event, item) => {
         ]"
         @menu-click="menuClick"
       >
-        <!--总而言之也是隐藏了一个图标-->
         <NavBarItemPlain
           display="flex lg:hidden"
           @click.prevent="isAsideMobileExpanded = !isAsideMobileExpanded"
@@ -66,14 +86,12 @@ const menuClick = (event, item) => {
             size="24"
           />
         </NavBarItemPlain>
-        <!--隐藏侧边栏按钮-->
         <NavBarItemPlain
           display="hidden lg:flex xl:hidden"
           @click.prevent="isAsideLgActive = true"
         >
           <BaseIcon :path="mdiMenu" size="24" />
         </NavBarItemPlain>
-        <!--搜索框-->
         <NavBarItemPlain use-margin>
           <FormControl
             placeholder="Search (ctrl+k)"
@@ -83,8 +101,39 @@ const menuClick = (event, item) => {
           />
         </NavBarItemPlain>
       </NavBar>
-      <!--侧边栏-->
-      <AsideMenu
+      <NavBar v-else
+        :menu="menuNavBarUnauthenticated"
+        :class="[
+          layoutAsidePadding,
+          { 'ml-60 lg:ml-0': isAsideMobileExpanded },
+        ]"
+        @menu-click="menuClick"
+      >
+        <NavBarItemPlain
+          display="flex lg:hidden"
+          @click.prevent="isAsideMobileExpanded = !isAsideMobileExpanded"
+        >
+          <BaseIcon
+            :path="isAsideMobileExpanded ? mdiBackburger : mdiForwardburger"
+            size="24"
+          />
+        </NavBarItemPlain>
+        <NavBarItemPlain
+          display="hidden lg:flex xl:hidden"
+          @click.prevent="isAsideLgActive = true"
+        >
+          <BaseIcon :path="mdiMenu" size="24" />
+        </NavBarItemPlain>
+        <NavBarItemPlain use-margin>
+          <FormControl
+            placeholder="Search (ctrl+k)"
+            ctrl-k-focus
+            transparent
+            borderless
+          />
+        </NavBarItemPlain>
+      </NavBar>
+      <AsideMenu v-if="(mainStore.isAuthenticated)"
         :is-aside-mobile-expanded="isAsideMobileExpanded"
         :is-aside-lg-active="isAsideLgActive"
         :menu="menuAside"
@@ -92,6 +141,15 @@ const menuClick = (event, item) => {
         @aside-lg-close-click="isAsideLgActive = false"
       />
       <slot />
+      <FooterBar>
+        Contact with us by
+        <a
+          href="http://chishenme.xyz/"
+          target="_blank"
+          class="text-blue-600"
+          >eat vegetable</a
+        >
+      </FooterBar>
     </div>
   </div>
 </template>

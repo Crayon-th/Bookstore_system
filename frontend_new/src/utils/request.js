@@ -1,8 +1,10 @@
 import axios from "axios";
+import { useMainStore } from "@/stores/main.js";
 // import qs from "qs";
 
+const mainStore = useMainStore();
+
 // 每次请求携带cookies信息
-axios.defaults.headers["X-Requested-With"] = "XMLHttpRequest";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
 
@@ -24,6 +26,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   (config) => {
+    config.headers["Authorization"] = mainStore.userToken;
     console.log(config);
     return config;
   },
@@ -35,18 +38,6 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     console.log("response:", response);
-    // if the custom code is not 200, it is judged as an error.
-    // if (response.status != 200) {
-    //   //判断token是否失效
-    //   if (response.status == 400) {
-    //     return Promise.reject(new Error("您尚未登录" || "Error"));
-    //   }
-
-    //   // eslint-disable-next-line no-undef
-    //   return Promise.reject(new Error(res.msg || "Error"));
-    // } else {
-    //   return response;
-    // }
     return response;
   },
   (error) => {

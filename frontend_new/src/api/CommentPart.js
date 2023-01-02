@@ -18,6 +18,15 @@ export function UserPostReview(data) {
   });
 }
 
+//用户对书籍评分
+export function UserPostRating(data) {
+  return request({
+    url: "/user/score/",
+    method: "post",
+    data: data,
+  });
+}
+
 //用户回复评论
 export function UserPostReviewToReview(data) {
   return request({

@@ -2,6 +2,7 @@
 import { mdiLogout, mdiClose } from "@mdi/js";
 import { computed } from "vue";
 import { useStyleStore } from "@/stores/style.js";
+import { useMainStore } from "@/stores/main.js";
 import AsideMenuList from "@/components/AsideMenuList.vue";
 import AsideMenuItem from "@/components/AsideMenuItem.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
@@ -17,8 +18,12 @@ const emit = defineEmits(["menu-click", "aside-lg-close-click"]);
 
 const styleStore = useStyleStore();
 
+const mainStore = useMainStore();
+
+console.log(mainStore.userId)
+
 const logoutItem = computed(() => ({
-  label: "退出登录",
+  label: "Logout",
   icon: mdiLogout,
   color: "info",
   isLogout: true,
@@ -66,7 +71,7 @@ const asideLgCloseClick = (event) => {
         "
         class="flex-1 overflow-y-auto overflow-x-hidden"
       >
-        <AsideMenuList :menu="menu" @menu-click="menuClick" />
+        <AsideMenuList :menu="menu" :id="mainStore.userId" @menu-click="menuClick" />
       </div>
 
       <ul>

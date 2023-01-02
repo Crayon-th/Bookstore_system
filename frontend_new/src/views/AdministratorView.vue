@@ -7,9 +7,14 @@ import {
   mdiAsterisk,
   mdiFormTextboxPassword,
   mdiBookEdit,
+  mdiFacebookWorkplace,
+  mdiTimer,
+  mdiTable,
+  mdiBadgeAccountHorizontal,
 } from "@mdi/js";
 import SectionMain from "@/components/SectionMain.vue";
 import CardBox from "@/components/CardBox.vue";
+import CardBoxModal from "@/components/CardBoxModal.vue";
 import BaseDivider from "@/components/BaseDivider.vue";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
@@ -17,9 +22,12 @@ import FormFilePicker from "@/components/FormFilePicker.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import UserCard from "@/components/UserCard.vue";
-import CardBoxModal from "@/components/CardBoxModal.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
+import TableSampleClients from "@/components/TableSampleClients.vue";
+import TableApplications from "@/components/TableApplications.vue"
+import TableViolations from "@/components/TableViolations.vue"
+import TableFeedbacks from "@/components/TableFeedbacks.vue"
 import {UserPostSeed, UserPostName, UserPostPassword} from "@/api/ProfileApi.js";
 import { ref } from "vue";
 
@@ -35,8 +43,6 @@ const showProblem = ref(false);
 const profileForm = reactive({
   name: mainStore.userName,
   email: mainStore.userEmail,
-  avatar: mainStore.userAvatar,
-  Token: mainStore.userToken
 });
 
 const passwordForm = reactive({
@@ -52,18 +58,33 @@ const getConfirmInfo = (Info) => {
 }
 
 const submitProfile = () => {
-  console.log(profileForm)
-  // mainStore.setUser(profileForm);
+  mainStore.setUser(profileForm);
 };
 
 const submitPass = () => {
-  //
+  UserPostPassword(mainStore.userId, passwordForm.password, passwordForm.password_current)
+    .then((response) => {
+      console.log(response);
+      if (response.data == 1) {
+        //提交成功
+        showSubmit.value = true;
+      } else {
+        errorTip.value = response.data.message;
+        showProblem.value = true;
+      }
+    })
+    .catch((error) => {
+      //提交失败
+      errorTip.value = "网络问题";
+      showProblem.value = true;
+      console.log(error);
+    });
 };
 
 const getSeed = (SeedForm) => {
     // ratingForm.rating = AvatarForm;
-    console.log(SeedForm.userSeed);
-    console.log(mainStore.userId);
+    // console.log(SeedForm.userSeed);
+    // console.log(mainStore.userId);
 
     UserPostSeed(mainStore.userId, SeedForm.userSeed)
     .then((response) => {
@@ -83,7 +104,6 @@ const getSeed = (SeedForm) => {
       console.log(error);
     });
 }
-
 </script>
 
 <template>
@@ -94,9 +114,7 @@ const getSeed = (SeedForm) => {
       <p>{{ errorTip }}</p>
     </CardBoxModal>
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiAccount" title="Profile" main>
-      </SectionTitleLineWithButton>
-
+      <SectionTitleLineWithButton :icon="mdiBadgeAccountHorizontal" title="WorkBench" main></SectionTitleLineWithButton>
       <UserCard @updatedAvatar="getSeed" class="mb-6" />
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -183,6 +201,21 @@ const getSeed = (SeedForm) => {
           </template>
         </CardBox>
       </div>
+      
+      <SectionTitleLineWithButton title="workbench" :icon = "mdiTimer" ></SectionTitleLineWithButton>
+      <CardBox class="mb-6" has-table>
+          <SectionTitleLineWithButton title="书籍添加申请" class="ml-6 mt-4" :icon="mdiTable" main></SectionTitleLineWithButton>
+          <TableApplications />
+      </CardBox>
+      <CardBox class="mb-6" has-table>
+          <SectionTitleLineWithButton title="社区违规处理" class="ml-6 mt-4" :icon="mdiTable" main></SectionTitleLineWithButton>
+          <TableViolations />
+      </CardBox>
+      <CardBox class="mb-6" has-table>
+          <SectionTitleLineWithButton title="建议反馈察看" class="ml-6 mt-4" :icon="mdiTable" main></SectionTitleLineWithButton>
+          <TableFeedbacks />
+      </CardBox>
     </SectionMain>
+
   </LayoutAuthenticated>
 </template>

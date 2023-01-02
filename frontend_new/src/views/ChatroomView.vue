@@ -1,312 +1,168 @@
 <template>
-    <div class="container-fluid h-100">
-        <div id="status" class="login"></div>
-        <div id="login">
-            <div class="main row justify-content-center h-100">
-                <form id="login-form" name="login-form">
-                    <div class="input-group">
-                        <input id="username" type="text" class="form-control all-input" autocomplete="off"
-                            placeholder="Username" />
-                        <div class="input-group-append">
-                            <button class="fas fa-location-arrow" type="submit"></button>
+    <LayoutAuthenticated>
+        <div>
+        <!-- This is an example component -->
+        <div class="container mx-auto shadow-lg rounded-lg">
+            <!-- headaer -->
+            <div class="px-5 py-5 flex justify-between items-center bg-white border-b-2">
+                <div class="font-semibold text-2xl">GoingChat</div>
+                <div class="w-1/2">
+                    <input type="text" name="" id="" placeholder="search IRL"
+                        class="rounded-2xl bg-gray-100 py-3 px-5 w-full" />
+                </div>
+                <div
+                    class="h-12 w-12 p-2 bg-yellow-500 rounded-full text-white font-semibold flex items-center justify-center">
+                    RA
+                </div>
+            </div>
+            <!-- end header -->
+            <!-- Chatting -->
+            <div class="flex flex-row justify-between bg-white">
+                <!-- chat list -->
+                <div class="flex flex-col w-2/5 border-r-2 overflow-y-auto">
+                    <!-- search compt -->
+                    <div class="border-b-2 py-4 px-2">
+                        <input type="text" placeholder="search chatting"
+                            class="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full" />
+                    </div>
+                    <!-- end search compt -->
+                    <!-- user list -->
+                    <div class="flex flex-row py-4 px-2 justify-center items-center border-b-2">
+                        <div class="w-1/4">
+                            <img src="https://source.unsplash.com/_7LbC5J-jw4/600x600"
+                                class="object-cover h-12 w-12 rounded-full" alt="" />
+                        </div>
+                        <div class="w-full">
+                            <div class="text-lg font-semibold">Luis1994</div>
+                            <span class="text-gray-500">Pick me at 9:00 Am</span>
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
+                    <div class="flex flex-row py-4 px-2 items-center border-b-2">
+                        <div class="w-1/4">
+                            <img src="https://source.unsplash.com/otT2199XwI8/600x600"
+                                class="object-cover h-12 w-12 rounded-full" alt="" />
+                        </div>
+                        <div class="w-full">
+                            <div class="text-lg font-semibold">Everest Trip 2021</div>
+                            <span class="text-gray-500">Hi Sam, Welcome</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-row py-4 px-2 items-center border-b-2 border-l-4 border-blue-400">
+                        <div class="w-1/4">
+                            <img src="https://source.unsplash.com/L2cxSuKWbpo/600x600"
+                                class="object-cover h-12 w-12 rounded-full" alt="" />
+                        </div>
+                        <div class="w-full">
+                            <div class="text-lg font-semibold">MERN Stack</div>
+                            <span class="text-gray-500">Lusi : Thanks Everyone</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-row py-4 px-2 items-center border-b-2">
+                        <div class="w-1/4">
+                            <img src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+                                class="object-cover h-12 w-12 rounded-full" alt="" />
+                        </div>
+                        <div class="w-full">
+                            <div class="text-lg font-semibold">Javascript Indonesia</div>
+                            <span class="text-gray-500">Evan : some one can fix this</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-row py-4 px-2 items-center border-b-2">
+                        <div class="w-1/4">
+                            <img src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+                                class="object-cover h-12 w-12 rounded-full" alt="" />
+                        </div>
+                        <div class="w-full">
+                            <div class="text-lg font-semibold">Javascript Indonesia</div>
+                            <span class="text-gray-500">Evan : some one can fix this</span>
+                        </div>
+                    </div>
 
-        <div id="chat-page" class="hide main">
-            <div class="row justify-content-center h-100">
-
-                <div class="col-md-8 col-xl-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex bd-highlight">
-                                <div class="chat-summary">
-                                    <span>Web Sockets with Spring Boot Chat</span>
-                                </div>
+                    <div class="flex flex-row py-4 px-2 items-center border-b-2">
+                        <div class="w-1/4">
+                            <img src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+                                class="object-cover h-12 w-12 rounded-full" alt="" />
+                        </div>
+                        <div class="w-full">
+                            <div class="text-lg font-semibold">Javascript Indonesia</div>
+                            <span class="text-gray-500">Evan : some one can fix this</span>
+                        </div>
+                    </div>
+                    <!-- end user list -->
+                </div>
+                <!-- end chat list -->
+                <!-- message -->
+                <div class="w-full px-5 flex flex-col justify-between">
+                    <div class="flex flex-col mt-5">
+                        <div class="flex justify-end mb-4">
+                            <div
+                                class="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
+                                Welcome to group everyone !
+                            </div>
+                            <img src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+                                class="object-cover h-8 w-8 rounded-full" alt="" />
+                        </div>
+                        <div class="flex justify-start mb-4">
+                            <img src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+                                class="object-cover h-8 w-8 rounded-full" alt="" />
+                            <div
+                                class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
+                                at praesentium, aut ullam delectus odio error sit rem. Architecto
+                                nulla doloribus laborum illo rem enim dolor odio saepe,
+                                consequatur quas?
                             </div>
                         </div>
+                        <div class="flex justify-end mb-4">
+                            <div>
+                                <div
+                                    class="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
+                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                    Magnam, repudiandae.
+                                </div>
 
-                        <div class="card-body">
-
-                            <div id="chat">
-
-                            </div>
-
-                        </div>
-
-                        <form id="message-controls" name="message-controls" class="card-footer">
-                            <div class="input-group">
-                                <textarea id="message" class="form-control all-input"
-                                    placeholder="Type your message..."></textarea>
-                                <div class="input-group-append">
-                                    <button class="fas fa-location-arrow" type="submit"></button>
+                                <div
+                                    class="mt-4 mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                    Debitis, reiciendis!
                                 </div>
                             </div>
-                        </form>
+                            <img src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+                                class="object-cover h-8 w-8 rounded-full" alt="" />
+                        </div>
+                        <div class="flex justify-start mb-4">
+                            <img src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+                                class="object-cover h-8 w-8 rounded-full" alt="" />
+                            <div
+                                class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white">
+                                happy holiday guys!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="py-5">
+                        <input class="w-full bg-gray-300 py-5 px-3 rounded-xl" type="text"
+                            placeholder="type your message here..." />
+                    </div>
+                </div>
+                <!-- end message -->
+                <div class="w-2/5 border-l-2 px-5">
+                    <div class="flex flex-col">
+                        <div class="font-semibold text-xl py-4">Mern Stack Group</div>
+                        <img src="https://source.unsplash.com/L2cxSuKWbpo/600x600" class="object-cover rounded-xl h-64"
+                            alt="" />
+                        <div class="font-semibold py-4">Created 22 Sep 2021</div>
+                        <div class="font-light">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
+                            perspiciatis!
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </LayoutAuthenticated>
 </template>
 
-<script>
-//import "../stores/script"
-// export default {
-// }
-
-'use strict'
-//import "../css/styles.css"
-
-let stompClient;
-let username;
-
-const connect = (event) => {
-    username = document.querySelector('#username').value.trim()
-
-    if (username) {
-        const login = document.querySelector('#login')
-        login.classList.add('hide')
-
-        const chatPage = document.querySelector('#chat-page')
-        chatPage.classList.remove('hide')
-
-        const socket = new SockJS('/chat-example')
-        stompClient = Stomp.over(socket)
-        stompClient.connect({}, onConnected, onError)
-    }
-    event.preventDefault()
-};
-
-const onConnected = () => {
-    //each connecter subscribes the '/topic/public' url
-    stompClient.subscribe('/topic/public', onMessageReceived)
-    stompClient.send("/app/chat.newUser",
-        {},
-        JSON.stringify({ sender: username, type: 'CONNECT' })
-    )
-    const status = document.querySelector('#status')
-    status.className = 'hide'
-};
-
-const onError = (error) => {
-    const status = document.querySelector('#status')
-    status.innerHTML = 'Could not find the connection you were looking for. Move along. Or, Refresh the page!'
-    status.style.color = 'red'
-};
-
-const sendMessage = (event) => {
-    const messageInput = document.querySelector('#message')
-    const messageContent = messageInput.value.trim()
-
-    if (messageContent && stompClient) {
-        const chatMessage = {
-            sender: username,
-            content: messageInput.value,
-            type: 'CHAT',
-            time: moment().calendar()
-        }
-        stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage))
-        messageInput.value = ''
-    }
-    event.preventDefault();
-};
-
-
-const onMessageReceived = (payload) => {
-    const message = JSON.parse(payload.body);
-
-    const chatCard = document.createElement('div')
-    chatCard.className = 'card-body'
-
-    const flexBox = document.createElement('div')
-    flexBox.className = 'd-flex justify-content-end mb-4'
-    chatCard.appendChild(flexBox)
-
-    const messageElement = document.createElement('div')
-    messageElement.className = 'msg_container_send'
-
-    flexBox.appendChild(messageElement)
-
-    if (message.type === 'CONNECT') {
-        messageElement.classList.add('event-message')
-        message.content = message.sender + ' connected!'
-    } else if (message.type === 'DISCONNECT') {
-        messageElement.classList.add('event-message')
-        message.content = message.sender + ' left!'
-    } else {
-        messageElement.classList.add('chat-message')
-
-        const avatarContainer = document.createElement('div')
-        avatarContainer.className = 'img_cont_msg'
-        const avatarElement = document.createElement('div')
-        avatarElement.className = 'circle user_img_msg'
-        const avatarText = document.createTextNode(message.sender[0])
-        avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(message.sender)
-        avatarContainer.appendChild(avatarElement)
-
-        messageElement.style['background-color'] = getAvatarColor(message.sender)
-
-        flexBox.appendChild(avatarContainer)
-
-        const time = document.createElement('span')
-        time.className = 'msg_time_send'
-        time.innerHTML = message.time
-        messageElement.appendChild(time)
-
-    }
-
-    messageElement.innerHTML = message.content
-
-    const chat = document.querySelector('#chat')
-    chat.appendChild(flexBox)
-    chat.scrollTop = chat.scrollHeight
-};
-
-const hashCode = (str) => {
-    let hash = 0
-    for (let i = 0; i < str.length; i++) {
-        hash = str.charCodeAt(i) + ((hash << 5) - hash)
-    }
-    return hash
-};
-
-
-const getAvatarColor = (messageSender) => {
-    const colours = ['#2196F3', '#32c787', '#1BC6B4', '#A1B4C4']
-    const index = Math.abs(hashCode(messageSender) % colours.length)
-    return colours[index]
-};
-
-
-const loginForm = document.querySelector('#login-form');
-console.log(loginForm);
-loginForm.addEventListener('submit', connect, true);
-const messageControls = document.querySelector('#message-controls');
-messageControls.addEventListener('submit', sendMessage, true);
-
+<script setup>
+import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 </script>
-
-<style scoped>
-/* @import '../css/styles.css'; */
-body,
-html {
-    margin: 0;
-    background-color: rgba(40, 42, 54, 1) !important;
-}
-
-.card {
-    height: 500px;
-    border-radius: 15px !important;
-    background-color: rgba(0, 0, 0, 0.4) !important;
-}
-
-.card-body {
-    overflow-y: auto;
-}
-
-.card-header {
-    border-radius: 15px 15px 0 0 !important;
-    border-bottom: 0 !important;
-}
-
-.card-footer {
-    border-radius: 0 0 15px 15px !important;
-    border-top: 0 !important;
-}
-
-.user_img {
-    height: 70px;
-    width: 70px;
-    border: 1.5px solid #f5f6fa;
-}
-
-
-.img_cont_msg {
-    height: 40px;
-    width: 40px;
-}
-
-.chat-summary {
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 15px;
-}
-
-.chat-summary span {
-    font-size: 20px;
-    color: white;
-}
-
-.chat-summary p {
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.msg_container_send {
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: 10px;
-    border-radius: 25px;
-    padding: 10px;
-    position: relative;
-    color: white;
-}
-
-.msg_time_send {
-    position: absolute;
-    right: 0;
-    bottom: -20px;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 10px;
-    width: max-content;
-}
-
-.all-input {
-    background-color: rgba(0, 0, 0, 0.3) !important;
-    border: 0 !important;
-    color: white !important;
-    height: 60px !important;
-    overflow-y: auto;
-}
-
-
-.all-input:focus {
-    box-shadow: none !important;
-    outline: 0px !important;
-}
-
-button {
-    background-color: rgba(0, 0, 0, 0.3) !important;
-    border: 0 !important;
-    color: white !important;
-    border-radius: 0 5px 5px 0 !important;
-}
-
-.hide {
-    display: none;
-}
-
-.login {
-    padding: 10px;
-}
-
-.main {
-    margin: 30px auto;
-}
-
-.circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    color: white;
-    text-align: center;
-    font-size: 1.5em;
-    vertical-align: middle;
-    margin: 3px;
-    border: 1.5px solid #f5f6fa;
-}
-</style>

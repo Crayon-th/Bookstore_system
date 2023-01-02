@@ -1,5 +1,4 @@
 import request from "@/utils/request";
-import axios from "axios";
 
 //出售一本书
 export function TradeBook(uid, datain) {
@@ -13,20 +12,21 @@ export function TradeBook(uid, datain) {
 
 //上传书的图片
 export function BookImage(file) {
-  var config = {
+  return request({
     method: "post",
     url: "/commodity/trade/bookimage/",
     data: file,
-    transformRequest: [
-      function (data, headers) {
-        // 去除post请求默认的Content-Type
-        delete headers.post["Content-Type"];
-        return data;
-      },
-    ],
-  };
-
-  return axios(config);
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    // transformRequest: [
+    //   function (data, headers) {
+    //     // 去除post请求默认的Content-Type
+    //     delete headers.post["Content-Type"];
+    //     return data;
+    //   },
+    // ],
+  });
 }
 
 //删除我的一个商品
