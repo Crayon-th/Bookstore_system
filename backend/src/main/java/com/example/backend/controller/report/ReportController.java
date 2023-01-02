@@ -26,7 +26,7 @@ public class ReportController {
     private timeUtil timeUtil=new timeUtil();
     @PostMapping("/api/report")
     @ApiOperation(value = "对一个评论进行举报")
-    public int Report(int reportID,int violationType, String violationDescription,int bookreviewid)
+    public int Report(int reportID,String violationType, String violationDescription,int bookreviewid)
     {
         String date=timeUtil.getCurrentTimeStamp();
         ViolationReport violationReport=new ViolationReport(null,reportID,violationType,violationDescription,date,bookreviewid);
