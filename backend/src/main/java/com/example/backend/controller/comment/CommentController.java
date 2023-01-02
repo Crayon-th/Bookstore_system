@@ -7,10 +7,7 @@ import com.example.backend.utils.timeUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api(tags = "评论接口")
@@ -42,7 +39,7 @@ public class CommentController {
 
     @PostMapping("/api/comment")
     @ApiOperation(value = "发表一个评论")
-    public int PostComment(Comment comment){
+    public int PostComment(@RequestBody Comment comment){
         comment.setDate(time.getCurrentTimeStamp());
         return commentService.postComment(comment);
     }

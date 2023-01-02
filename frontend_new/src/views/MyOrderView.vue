@@ -25,6 +25,7 @@
             v-for="(each, index) in BuyOrderList"
             :key="index"
             class="mb-6"
+            @click="ChoiceComment(each)"
           >
             <b class="font-black">订单类型：购买</b>
             <br />
@@ -64,6 +65,7 @@
             v-for="(each, index) in SellOrderList"
             :key="index"
             class="mb-6"
+            @click="ChoiceOrder(each)"
           >
             <b class="font-black">订单类型：出售</b>
             <br />
@@ -117,6 +119,80 @@
         </FormField>
       </div>
     </CardBoxModal>
+    <!--评论界面-->
+    <CardBoxModal
+      v-model="showUserComments"
+      title="评论订单"
+      button="success"
+      button-label="提交评论"
+      @confirm="ConfirmUserComment()"
+    >
+      <div class="mt-8">
+        <FormField label="Comment Content" help="">
+          <FormControl
+            v-model="UserCommentsConnent"
+            type="tel"
+            placeholder="请输入友善的评论吧"
+          />
+        </FormField>
+      </div>
+      <!--打分-->
+      <div class="score-order">
+        <div id="app" class="ml-16">
+          <StarRating
+            :increment="0.5"
+            :star-size="40"
+            :show-rating="true"
+            :rounded-corners="true"
+            :border-width="4"
+            :star-points="[
+              23, 2, 14, 17, 0, 19, 10, 34, 7, 50, 23, 43, 38, 50, 36, 34, 46,
+              19, 31, 17,
+            ]"
+            @rating="GetRating"
+          >
+          </StarRating>
+          <p></p>
+        </div>
+      </div>
+    </CardBoxModal>
+    <!--查看评论-->
+    <CardBoxModal
+      v-model="showOrderComments"
+      title="收到的评论"
+      button="success"
+      @confirm="getOrderCommentsConfirmInfo"
+    >
+      <div v-for="(each, index) in OrderCommnetList" :key="index">
+        <b class="font-black">购买用户评论</b>
+        <br />
+        <b class="font-black">用户评分：{{ each.score }}</b>
+        <br />
+        <b class="font-black">评论内容：{{ each.content }}</b>
+        <br />
+        <b class="font-black">用户ID：{{ each.replyID }}</b>
+        <br />
+        <b class="font-black">评论日期：{{ each.date }}</b>
+        <br />
+        <br />
+        <div class="order-commnet-button">
+          <BaseButton
+            color="lightDark"
+            label="上一条"
+            :icon="mdiArrowLeft"
+            @click="GetNowOrderCommentPage('backward')"
+          />
+          <div style="float: right">
+            <BaseButton
+              color="lightDark"
+              label="下一条"
+              :icon="mdiArrowRight"
+              @click="GetNowOrderCommentPage('forward')"
+            />
+          </div>
+        </div>
+      </div>
+    </CardBoxModal>
     <!--成功提交-->
     <CardBoxModal
       v-model="showSubmit"
@@ -147,9 +223,13 @@ import CardBox from "@/components/CardBox.vue";
 import { useMainStore } from "@/stores/main.js";
 import { BuyerGetOrder, SellerGetOrder } from "@/api/SellBookPart.js";
 import { UserFeedBack } from "@/api/reportPart.js";
+import { CustomerPostComment, SellerGetComment } from "@/api/CommentPart.js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
+import StarRating from "../components/StarRating.vue";
+
+const mainStore = useMainStore();
 
 const SizeOnePage = ref(2);
 
@@ -212,7 +292,133 @@ const getErrorConfirmInfo = () => {
   showProblem.value = false;
 };
 
-const mainStore = useMainStore();
+//评论的订单的信息
+var CommentOrderInfo = ref({});
+//进行评论
+const ChoiceComment = (info) => {
+  //获取信息
+  CommentOrderInfo.value = info;
+  showUserComments.value = true;
+};
+//显示评论订单页面
+const showUserComments = ref(false);
+//评论的内容
+var UserCommentsConnent = ref("");
+//评论的分数
+var UsrtCommentsScore = ref(0);
+//获取评价的分数
+const GetRating = (val) => {
+  UsrtCommentsScore.value = val;
+};
+//结束提交的界面
+const ConfirmUserComment = () => {
+  //
+  showUserComments.value = false;
+  //判断是否为空
+  if (UserCommentsConnent.value != "") {
+    //提交的信息
+    let comment = {
+      content: UserCommentsConnent.value,
+      date: "",
+      id: 0,
+      orderID: CommentOrderInfo.value.id,
+      replyID: mainStore.userId,
+      score: UsrtCommentsScore.value,
+    };
+    //提交
+    CustomerPostComment(comment)
+      .then((response) => {
+        console.log(response);
+        showSubmit.value = true;
+      })
+      .catch((error) => {
+        showProblem.value = true;
+        console.log(error);
+      });
+  }
+};
+
+//订单界面的显示
+const showOrderComments = ref(false);
+//订单的信息
+var OrderInfo = ref({});
+//显示订单页面
+const ChoiceOrder = (val) => {
+  //保存订单信息
+  OrderInfo.value = val;
+  showOrderComments.value = true;
+  //首次获取信息
+  GetNowOrderCommentPage("frist");
+};
+//保存当前页数
+var CurrentOrderPage = ref(1);
+//保存最大页数
+var MaxOrderPage = ref(1);
+//评论的内容
+var OrderCommnetList = ref([]);
+//获取评论内容
+const GetNowOrderCommentPage = (distance) => {
+  //首次获取页面
+  if ("frist" == distance) {
+    let data = {
+      orderid: OrderInfo.value.id,
+      current: CurrentOrderPage.value,
+      size: 1,
+    };
+    SellerGetComment(data)
+      .then((response) => {
+        OrderCommnetList.value = response.data.records;
+        MaxOrderPage.value = response.data.total;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  //向前获取页面(新的)
+  if ("forward" == distance) {
+    if (CurrentOrderPage.value < MaxOrderPage.value) {
+      //新的索引
+      let data = {
+        orderid: OrderInfo.value.id,
+        current: CurrentOrderPage.value + 1,
+        size: 1,
+      };
+      SellerGetComment(data)
+        .then((response) => {
+          OrderCommnetList.value = response.data.records;
+          //页面计数加一
+          CurrentOrderPage.value = CurrentOrderPage.value + 1;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+  //向后获取页面(老的)
+  if ("backward" == distance) {
+    if (CurrentOrderPage.value > 1) {
+      //新的索引
+      let data = {
+        orderid: OrderInfo.value.id,
+        current: CurrentOrderPage.value - 1,
+        size: 1,
+      };
+      SellerGetComment(data)
+        .then((response) => {
+          OrderCommnetList.value = response.data.records;
+          //页面计数减一
+          CurrentOrderPage.value = CurrentOrderPage.value - 1;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+};
+//结束查看订单页面
+const getOrderCommentsConfirmInfo = () => {
+  showOrderComments.value = false;
+};
 
 //获取购买的订单
 const GetNowBuyPage = (distance) => {
@@ -364,5 +570,10 @@ onMounted(() => {
 .title-button {
   position: relative;
   left: 62%;
+}
+
+.score-order {
+  position: relative;
+  right: 9%;
 }
 </style>
