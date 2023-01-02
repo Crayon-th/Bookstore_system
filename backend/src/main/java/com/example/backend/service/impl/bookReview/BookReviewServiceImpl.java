@@ -32,4 +32,10 @@ public class BookReviewServiceImpl implements BookReviewService {
     public int postReview(BookReview bookReview) {
         return bookReviewMapper.insert(bookReview);
     }
+
+    @Override
+    public BookReview getReviewByID(int id)
+    {
+        return bookReviewMapper.selectById(id);
+    }
 }

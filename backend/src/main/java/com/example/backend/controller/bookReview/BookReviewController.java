@@ -39,5 +39,12 @@ public class BookReviewController {
         return bookReviewService.postReview(bookReview);
     }
 
+    @GetMapping("/api/bookReview/one")
+    @ApiOperation(value = "获得id所对应的评论")
+    public BookReview getReviewByID(int id)
+    {
+        return bookReviewService.getReviewByID(id);
+    }
+
 
 }

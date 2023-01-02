@@ -8,4 +8,6 @@ public interface BookReviewService {
     int deleteReview(int reviewID);
     List<BookReview> getReview(String isbn);
     int postReview(BookReview bookReview);
+
+    BookReview getReviewByID(int id);
 }
