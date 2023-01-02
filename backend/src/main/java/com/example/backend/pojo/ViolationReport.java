@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @TableName("violationReport")
 public class ViolationReport {
-    @TableId(type= IdType.AUTO)
+    @TableId(type= IdType.AUTO,value = "id")
     private Integer ID;
     @TableField("reportID")
     private Integer reportID;
