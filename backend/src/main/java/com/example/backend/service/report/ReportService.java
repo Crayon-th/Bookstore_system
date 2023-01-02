@@ -1,5 +1,6 @@
 package com.example.backend.service.report;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.backend.pojo.ViolationReport;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 public interface ReportService {
     int Report(ViolationReport report);
 
-    List<ViolationReport> getReports();
+    IPage getReports(long current,long size);
 
     int deleteReport(int id);
 }

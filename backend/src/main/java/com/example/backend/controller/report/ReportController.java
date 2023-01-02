@@ -1,5 +1,6 @@
 package com.example.backend.controller.report;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.backend.pojo.BookReview;
 import com.example.backend.pojo.ViolationReport;
 import com.example.backend.service.report.ReportService;
@@ -34,9 +35,9 @@ public class ReportController {
 
     @GetMapping("/api/report")
     @ApiOperation(value = "为管理员获得所有待处理的reports")
-    public List<ViolationReport> getReports()
+    public IPage getReports(long current, long size)
     {
-        return reportService.getReports();
+        return reportService.getReports(current,size);
     }
 
     @DeleteMapping("/api/report")
