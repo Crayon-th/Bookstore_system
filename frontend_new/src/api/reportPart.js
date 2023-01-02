@@ -17,3 +17,12 @@ export function AdministratorBlockAccount(data) {
     data: data,
   });
 }
+
+//用户发起反馈
+export function UserFeedBack(data) {
+  return request({
+    url: "/api/feedback",
+    method: "post",
+    data: data,
+  });
+}

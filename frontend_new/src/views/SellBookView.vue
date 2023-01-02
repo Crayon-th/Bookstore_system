@@ -1,9 +1,19 @@
 <template>
   <LayoutAuthenticated>
-    <CardBoxModal v-model="showSubmit" @confirm="getConfirmInfo" title="提交成功" button="success">
+    <CardBoxModal
+      v-model="showSubmit"
+      title="提交成功"
+      button="success"
+      @confirm="getConfirmInfo"
+    >
     </CardBoxModal>
     <!--出了点问题-->
-    <CardBoxModal v-model="showProblem" @confirm="getConfirmInfo" title="系统开小差了" button="danger">
+    <CardBoxModal
+      v-model="showProblem"
+      title="系统开小差了"
+      button="danger"
+      @confirm="getErrorConfirmInfo"
+    >
       <p>{{ errorTip }}</p>
     </CardBoxModal>
     <SectionMain>
@@ -146,7 +156,12 @@ const form = reactive({
 const getConfirmInfo = (Info) => {
   showSubmit.value = false;
   console.log(Info);
-}
+};
+
+const getErrorConfirmInfo = (Info) => {
+  showProblem.value = false;
+  console.log(Info);
+};
 
 //错误提示
 var errorTip = ref("");
@@ -203,35 +218,36 @@ const BookForSale = () => {
   }
 };
 
-
 const client = new OSS({
   // yourregion填写Bucket所在地域。以华东1（杭州）为例，Region填写为oss-cn-hangzhou。
-  region: 'oss-cn-shanghai',
+  region: "oss-cn-shanghai",
   // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-  accessKeyId: 'LTAI5tLKDfAjWxMZQeUbDkDp',
-  accessKeySecret: 'U07VCefFJvpg2JZPAcXeu9MaqAQp7X',
+  accessKeyId: "LTAI5tLKDfAjWxMZQeUbDkDp",
+  accessKeySecret: "U07VCefFJvpg2JZPAcXeu9MaqAQp7X",
   // 填写Bucket名称。
-  bucket: 'bucket-for-picgo-of-pikachu',
+  bucket: "bucket-for-picgo-of-pikachu",
 });
 
 const headers = {
   // 指定Object的存储类型。
-  'x-oss-storage-class': 'Standard',
+  "x-oss-storage-class": "Standard",
   // 指定Object的访问权限。
-  'x-oss-object-acl': 'private',
+  "x-oss-object-acl": "private",
   // 设置Object的标签，可同时设置多个标签。
-  'x-oss-tagging': 'Tag1=1&Tag2=2',
+  "x-oss-tagging": "Tag1=1&Tag2=2",
   // 指定PutObject操作时是否覆盖同名目标Object。此处设置为true，表示禁止覆盖同名Object。
-  'x-oss-forbid-overwrite': 'true',
+  "x-oss-forbid-overwrite": "true",
 };
 
-async function put () {
+async function put() {
   try {
     // 填写OSS文件完整路径和本地文件的完整路径。OSS文件完整路径中不能包含Bucket名称。
     // 如果本地文件的完整路径中未指定本地路径，则默认从示例程序所属项目对应本地路径中上传文件。
-    const result = await client.multipartUpload('pikachu.jpg', 'C:\\Users\\86137\\Pictures\\pikachu.jpg'
-    // 自定义headers
-    ,{headers}
+    const result = await client.multipartUpload(
+      "pikachu.jpg",
+      "C:\\Users\\86137\\Pictures\\pikachu.jpg",
+      // 自定义headers
+      { headers }
     );
     console.log(result);
   } catch (e) {
