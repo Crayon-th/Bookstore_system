@@ -2,7 +2,8 @@
 import { mdiUpload } from "@mdi/js";
 import { computed, ref, watch } from "vue";
 import BaseButton from "@/components/BaseButton.vue";
-import { BookImage } from "@/api/SellBookPart.js";
+// import { BookImage } from "@/api/SellBookPart.js";
+import { PutPictrueInBed } from "@/api/SellBookPart.js";
 
 const props = defineProps({
   modelValue: {
@@ -53,12 +54,16 @@ const upload = (event) => {
 
   // Use this as an example for handling file uploads
   let formData = new FormData();
-  formData.append("picture", file.value);
-
-  BookImage(formData)
+  formData.append("file", file.value);
+  //传递token
+  let params = {
+    token: "cf716756cc4549578638aebd82bbdc94",
+  };
+  //上传到图床
+  PutPictrueInBed(formData, params)
     .then((response) => {
       let emitData = {
-        bookimg: response.data,
+        bookimg: response.data.url,
       };
       emit("bookimg", emitData);
       console.log(response);

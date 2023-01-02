@@ -26,7 +26,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   (config) => {
-    if (config.baseURL != "/outer") {
+    if (config.baseURL == "/api") {
       config.headers["Authorization"] = mainStore.userToken;
     }
     console.log(config);

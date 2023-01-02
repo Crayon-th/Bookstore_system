@@ -87,8 +87,8 @@ import { mdiBookOpenBlankVariant, mdiSearchWeb } from "@mdi/js";
 import CardBox from "@/components/CardBox.vue";
 import { useMainStore } from "@/stores/main.js";
 import {
-CommodityDisplay,
-CommodityDisplayToBookName,
+  CommodityDisplay,
+  CommodityDisplayToBookName,
 } from "@/api/ProductDisplay.js";
 
 const SizeOnePage = ref(4);
@@ -104,153 +104,147 @@ var SeachInfo = ref("");
 var IfSearch = ref(false);
 
 const GetNowPage = (distance) => {
-//首次获取页面
-if ("frist" == distance) {
-  let data = {
-    current: CurrentPage.value,
-    size: SizeOnePage.value,
-  };
-  //获取信息
-  GetBookInfo(data)
-    .then((response) => {
-      GetInfo.value = response.data;
-      BookList.value = GetInfo.value.records;
-      MaxPage.value = GetInfo.value.pages;
-      for (let each of BookList.value) {
-        if (each.imageurl == null || each.imageurl == "") {
-          each.imageurl = "../assets/img/bookCover1.jpg";
-        } else {
-          each.imageurl = "http://localhost:3000" + each.imageurl;
+  //首次获取页面
+  if ("frist" == distance) {
+    let data = {
+      current: CurrentPage.value,
+      size: SizeOnePage.value,
+    };
+    //获取信息
+    GetBookInfo(data)
+      .then((response) => {
+        GetInfo.value = response.data;
+        BookList.value = GetInfo.value.records;
+        MaxPage.value = GetInfo.value.pages;
+        for (let each of BookList.value) {
+          if (each.imageurl == null || each.imageurl == "") {
+            each.imageurl = "../assets/img/bookCover1.jpg";
+          }
         }
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-  // BookList.value = GetInfo.value.records;
-  // MaxPage.value = GetInfo.value.pages;
-}
-//向前获取页面(新的)
-if ("forward" == distance) {
-  if (CurrentPage.value < MaxPage.value) {
-    //新的索引
-    let data = {
-      current: CurrentPage.value + 1,
-      size: SizeOnePage.value,
-    };
-    //获取信息
-    GetBookInfo(data)
-      .then((response) => {
-        GetInfo.value = response.data;
-        BookList.value = GetInfo.value.records;
-        MaxPage.value = GetInfo.value.pages;
-        //页面计数加一
-        CurrentPage.value = CurrentPage.value + 1;
-        for (let each of BookList.value) {
-          if (each.imageurl == null || each.imageurl == "") {
-            each.imageurl = "../assets/img/bookCover1.jpg";
-          } else {
-            each.imageurl = "http://localhost:3000" + each.imageurl;
-          }
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // BookList.value = GetInfo.value.records;
+    // MaxPage.value = GetInfo.value.pages;
   }
-}
-//向后获取页面(老的)
-if ("backward" == distance) {
-  if (CurrentPage.value > 1) {
-    //新的索引
-    let data = {
-      current: CurrentPage.value - 1,
-      size: SizeOnePage.value,
-    };
-    //获取信息
-    GetBookInfo(data)
-      .then((response) => {
-        GetInfo.value = response.data;
-        BookList.value = GetInfo.value.records;
-        MaxPage.value = GetInfo.value.pages;
-        //页面计数减一
-        CurrentPage.value = CurrentPage.value - 1;
-        for (let each of BookList.value) {
-          if (each.imageurl == null || each.imageurl == "") {
-            each.imageurl = "../assets/img/bookCover1.jpg";
-          } else {
-            each.imageurl = "http://localhost:3000" + each.imageurl;
+  //向前获取页面(新的)
+  if ("forward" == distance) {
+    if (CurrentPage.value < MaxPage.value) {
+      //新的索引
+      let data = {
+        current: CurrentPage.value + 1,
+        size: SizeOnePage.value,
+      };
+      //获取信息
+      GetBookInfo(data)
+        .then((response) => {
+          GetInfo.value = response.data;
+          BookList.value = GetInfo.value.records;
+          MaxPage.value = GetInfo.value.pages;
+          //页面计数加一
+          CurrentPage.value = CurrentPage.value + 1;
+          for (let each of BookList.value) {
+            if (each.imageurl == null || each.imageurl == "") {
+              each.imageurl = "../assets/img/bookCover1.jpg";
+            }
           }
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
-}
+  //向后获取页面(老的)
+  if ("backward" == distance) {
+    if (CurrentPage.value > 1) {
+      //新的索引
+      let data = {
+        current: CurrentPage.value - 1,
+        size: SizeOnePage.value,
+      };
+      //获取信息
+      GetBookInfo(data)
+        .then((response) => {
+          GetInfo.value = response.data;
+          BookList.value = GetInfo.value.records;
+          MaxPage.value = GetInfo.value.pages;
+          //页面计数减一
+          CurrentPage.value = CurrentPage.value - 1;
+          for (let each of BookList.value) {
+            if (each.imageurl == null || each.imageurl == "") {
+              each.imageurl = "../assets/img/bookCover1.jpg";
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
 };
 
 const router = useRouter();
 
 const GetDetail = (bookDetail) => {
-router.push({
-  name: "buyBookDetail",
-  params: bookDetail,
-});
+  router.push({
+    name: "buyBookDetail",
+    params: bookDetail,
+  });
 };
 
 onMounted(() => {
-GetNowPage("frist");
-console.log(mainStore.userName);
-console.log(mainStore.userAvatar);
+  GetNowPage("frist");
+  console.log(mainStore.userName);
+  console.log(mainStore.userAvatar);
 });
 
 const mainStore = useMainStore();
 
 const ToSellBook = () => {
-if (mainStore.userName == "") {
-  router.push("/login");
-} else {
-  router.push("/sellBook");
-}
+  if (mainStore.userName == "") {
+    router.push("/login");
+  } else {
+    router.push("/sellBook");
+  }
 };
 
 const ToGetMyOrder = () => {
-if (mainStore.userName == "") {
-  router.push("/login");
-} else {
-  router.push("/myOrder");
-}
+  if (mainStore.userName == "") {
+    router.push("/login");
+  } else {
+    router.push("/myOrder");
+  }
 };
 
 const SeachBookInfo = () => {
-if (SeachInfo.value == null || SeachInfo.value == "") {
-  IfSearch = false;
-} else {
-  IfSearch = true;
-}
+  if (SeachInfo.value == null || SeachInfo.value == "") {
+    IfSearch = false;
+  } else {
+    IfSearch = true;
+  }
 
-console.log("aaaa");
-CurrentPage.value = 1;
-GetNowPage("frist");
+  console.log("aaaa");
+  CurrentPage.value = 1;
+  GetNowPage("frist");
 };
 
 const GetBookInfo = (data) => {
-if (IfSearch.value == false) {
-  return CommodityDisplay(data);
-} else {
-  let newData = {
-    bookName: SeachInfo.value,
-    current: data.current,
-    size: data.size,
-  };
-  return CommodityDisplayToBookName(newData);
-}
+  if (IfSearch.value == false) {
+    return CommodityDisplay(data);
+  } else {
+    let newData = {
+      bookName: SeachInfo.value,
+      current: data.current,
+      size: data.size,
+    };
+    return CommodityDisplayToBookName(newData);
+  }
 };
 </script>
 <style scoped>
 .search-info-box {
-width: 85%;
+  width: 85%;
 }
 </style>
