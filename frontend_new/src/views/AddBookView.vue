@@ -1,9 +1,19 @@
 <template>
   <LayoutAuthenticated>
-    <CardBoxModal v-model="showSubmit" @confirm="getConfirmInfo" title="提交成功" button="success">
+    <CardBoxModal
+      v-model="showSubmit"
+      title="提交成功"
+      button="success"
+      @confirm="getConfirmInfo"
+    >
     </CardBoxModal>
     <!--出了点问题-->
-    <CardBoxModal v-model="showProblem" @confirm="getConfirmInfo" title="系统开小差了" button="danger">
+    <CardBoxModal
+      v-model="showProblem"
+      title="系统开小差了"
+      button="danger"
+      @confirm="getConfirmInfo"
+    >
       <p>{{ errorTip }}</p>
     </CardBoxModal>
     <SectionMain>
@@ -76,10 +86,10 @@
           />
         </FormField>
 
-        <!-- <FormField help="Max 2MB">
-            <FormFilePicker label="上传书籍封面" @bookimg="GetBookUrl" />
-          </FormField>
-          <BaseDivider /> -->
+        <FormField help="Max 2MB">
+          <FormFilePicker label="上传书籍封面" @bookimg="GetBookUrl" />
+        </FormField>
+        <BaseDivider />
 
         <template #footer>
           <BaseButtons>
@@ -120,8 +130,8 @@ import BaseButtons from "@/components/BaseButtons.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
 import CardBoxModal from "@/components/CardBoxModal.vue";
-import {ApplyNewBook } from "@/api/BookManagement.js";
-//import FormFilePicker from "@/components/FormFilePicker.vue";
+import { ApplyNewBook } from "@/api/BookManagement.js";
+import FormFilePicker from "@/components/FormFilePicker.vue";
 import { useMainStore } from "@/stores/main.js";
 import { ref } from "vue";
 // import { useRouter } from "vue-router";
@@ -135,6 +145,7 @@ const form = reactive({
   type: "",
   state: "",
   introduction: "",
+  picurl: "",
 });
 
 //错误提示
@@ -148,13 +159,13 @@ const getConfirmInfo = (Info) => {
   showSubmit.value = false;
   showProblem.value = false;
   console.log(Info);
-}
+};
 
 const submitApplication = () => {
   var data = form;
   let param = {
-    "uid": mainStore.userId,
-  }
+    uid: mainStore.userId,
+  };
   console.log(data);
   ApplyNewBook(data, param)
     .then((response) => {
@@ -175,18 +186,18 @@ const submitApplication = () => {
     });
 };
 
-//   const GetBookUrl = (val) => {
-//     form.imageurl = val.bookimg;
-//     console.log(form.imageurl);
-//   };
+const GetBookUrl = (val) => {
+  form.picurl = val.bookimg;
+};
 
 const cleanAll = () => {
   form.isbn = "";
   form.bookName = "";
   form.author = "";
   form.version = "";
-  form.createTime = "";
   form.type = "";
-  form.price = 0;
+  form.state = "";
+  form.introduction = "";
+  form.picurl = "";
 };
 </script>
