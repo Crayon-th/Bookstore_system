@@ -60,7 +60,7 @@ export function DeleteApply(data) {
   return request({
     url: "/apply/application/",
     method: "delete",
-    data: data,
+    params: data,
   });
 }
 

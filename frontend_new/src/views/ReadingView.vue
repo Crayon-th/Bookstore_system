@@ -311,21 +311,21 @@ const getAssetsImages = (name) => {
           🌟添加新书🌟
         </p>
       </CardBox>
-      <div style="display:flex width:100%">
-        <BaseButton
-          color="lightDark"
-          label="搜索书籍信息"
-          :icon="mdiSearchWeb"
-          @click="SeachBookInfo"
+      <div class="grid grid-cols-12" style="width:100%">
+        <BaseButton class="col-start-1 col-span-2"
+        color="lightDark"
+        label="搜索书籍信息"
+        :icon="mdiSearchWeb"
+        @click="SeachBookInfo"
         />
-        <FormControl
-          v-model="SeachInfo"
-          class="search-info-box"
-          placeholder="请输入书籍信息"
+        <FormControl 
+        v-model="SeachInfo"
+        class="col-start-3 col-span-11 search-info-box"
+        placeholder="请输入书籍信息"
         />
       </div>
 
-      <br />
+      <br>
 
       <SectionTitleLineWithButton
         title="新书速递"
@@ -343,7 +343,7 @@ const getAssetsImages = (name) => {
             <div>
               <!--暂时固定了封面-->
               <img
-                :src="getAssetsImages(book.picurl)"
+              :src="getAssetsImages(book.picurl)"
                 alt="BookImg"
                 class="w-32 h-52 space-x-5"
               />

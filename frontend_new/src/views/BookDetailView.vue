@@ -98,10 +98,6 @@ const getRating = (val) => {
     });
 }
 
-var BookInfo = ref(router.currentRoute.value.params);
-
-console.log(BookInfo)
-
 const book = {
     ISBN: "114514514514",
     bookName: "La Peste",
@@ -276,12 +272,12 @@ onMounted(() => {
         <SectionMain>
             <div class="grid grid-cols-1 gap-6 mb-4 mr-24">
                 <CardBoxBook  class="bg-white">
-                    <div class="flex">
-                        <div class="ml-10">
-                            <img :src="book.url" alt="BookImg" class="w-48 h-80 flex-none">
+                    <div class="grid grid-cols-12">
+                        <div class=" col-start-1 col-span-3">
+                            <img :src="BookDetail.picurl" alt="BookImg" class="w-48 h-80 flex-none">
                         </div>
 
-                        <CardBox class="w-4/7 ml-16">
+                        <CardBox class="col-start-4 col-span-6">
                             <p class="text-base font-bold text-blue-400 mt-4">书名:{{ BookDetail.bookname }}</p>
                             <p class="mt-4 text-base font-bold">作者:{{ BookDetail.author }}</p>
                             <!-- <p class="mt-6 text-base font-bold">出版日期:{{ BookDetail.publishTime }}</p>
@@ -293,7 +289,7 @@ onMounted(() => {
                             <p class="mt-6 text-base font-bold">ISBN:{{ BookDetail.isbn }}</p>
                             <p class="mt-6 text-base font-bold">介绍:{{ BookDetail.introduction }}</p>
                         </CardBox>
-                        <CardBox class="bg-purple-50 w-1/4 ml-16">
+                        <CardBox class="bg-purple-50 col-start-10 col-end-13 text-yellow-500">
                             <p class="mt-16 text-base font-bold ml-5 text-gray-500">评分:</p>
                             <p class="mt-4 text-4xl font-bold ml-3 text-gray-700">{{Number(BookDetail.score).toFixed(1)}}</p>
                             <div class="grid grid-cols-5 mt-8">

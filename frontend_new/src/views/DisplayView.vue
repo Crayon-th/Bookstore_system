@@ -16,7 +16,7 @@
             :icon="mdiSearchWeb"
             @click="SeachBookInfo"
             />
-            <FormControl
+            <FormControl @keyup.enter.native="SeachBookInfo"
             v-model="SeachInfo"
             class="search-info-box"
             placeholder="请输入书籍信息"

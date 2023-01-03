@@ -8,6 +8,8 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
+import FormField from "@/components/FormField.vue";
+import FormFilePicker from "@/components/FormFilePicker.vue";
 import { AddNewBook, GetApply, DeleteApply, GetInfoFromWeb} from "@/api/BookManagement.js";
 
 defineProps({
@@ -52,11 +54,13 @@ const items = computed(() => applicationList.value);
 let detail = {
   bookName : "",
   author : "",
+  id: 0,
   isbn: "",
   type: "",
   introduction: "",
   state: "",
   version: "",
+  picurl: "",
 }
 
 const isModalActive = ref(false);
@@ -127,6 +131,7 @@ const checkApply = (apply) => {
   detail.state = apply.state;
   detail.version = apply.version;
   detail.introduction = apply.introduction;
+  detail.id = apply.id;
 }
 
 const submitDirectly = () => {
@@ -138,7 +143,8 @@ const submitDirectly = () => {
     score: 0,
     state: detail.state,
     type: detail.type,
-    version: detail.version
+    version: detail.version,
+    picurl: detail.picurl,
   }
   console.log(data);
   AddNewBook(data)
@@ -148,6 +154,16 @@ const submitDirectly = () => {
         //提交成功
         isModalActive.value = false;
         showSubmit.value = true;
+        let appyId = {
+          id: detail.id,
+        }
+        DeleteApply(appyId)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       }
       else {
         errorTip.value = response.data.message;
@@ -210,7 +226,8 @@ const submitThroughAPI = () => {
         score: response.data.data.doubanScore/10,
         state: detail.state,
         type: detail.type,
-        version: response.data.data.publishing
+        version: response.data.data.publishing,
+        picurl: response.data.data.photoUrl,
       }
       console.log(data);
       AddNewBook(data)
@@ -220,6 +237,16 @@ const submitThroughAPI = () => {
             //提交成功
             isModalActive.value = false;
             showSubmit.value = true;
+            let appyId = {
+              id: detail.id,
+            }
+            DeleteApply(appyId)
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
           }
           else {
             errorTip.value = response.data.message;
@@ -244,6 +271,11 @@ const submitThroughAPI = () => {
       console.log(error);
     });
 }
+
+const GetBookUrl = (val) => {
+  detail.picurl = val.bookimg;
+  console.log(detail.picurl);
+};
 </script>
 
 <template>
@@ -280,6 +312,9 @@ const submitThroughAPI = () => {
             @click="submitThroughAPI"
           />
         </BaseButtons>
+        <FormField class="mt-2" help="Max 2MB">
+          <FormFilePicker label="上传书籍封面" @bookimg="GetBookUrl" />
+        </FormField>
     </div>
   </CardBoxModal>
 

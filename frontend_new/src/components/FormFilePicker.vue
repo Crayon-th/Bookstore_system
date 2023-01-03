@@ -57,7 +57,8 @@ const upload = (event) => {
   formData.append("file", file.value);
   //传递token
   let params = {
-    token: "cf716756cc4549578638aebd82bbdc94",
+    // token: "cf716756cc4549578638aebd82bbdc94",
+    token: "ec1550e9db79444e888089473fed6b37",
   };
   //上传到图床
   PutPictrueInBed(formData, params)

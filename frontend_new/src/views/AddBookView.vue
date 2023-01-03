@@ -86,11 +86,6 @@
           />
         </FormField>
 
-        <FormField help="Max 2MB">
-          <FormFilePicker label="上传书籍封面" @bookimg="GetBookUrl" />
-        </FormField>
-        <BaseDivider />
-
         <template #footer>
           <BaseButtons>
             <BaseButton
@@ -131,7 +126,6 @@ import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import { ApplyNewBook } from "@/api/BookManagement.js";
-import FormFilePicker from "@/components/FormFilePicker.vue";
 import { useMainStore } from "@/stores/main.js";
 import { ref } from "vue";
 // import { useRouter } from "vue-router";
@@ -184,10 +178,6 @@ const submitApplication = () => {
       showProblem.value = true;
       console.log(error);
     });
-};
-
-const GetBookUrl = (val) => {
-  form.picurl = val.bookimg;
 };
 
 const cleanAll = () => {

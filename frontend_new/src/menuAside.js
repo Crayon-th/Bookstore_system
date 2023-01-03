@@ -40,11 +40,6 @@ export default [
     label: "订单中心",
     icon: mdiCart,
   },
-  {
-    to: "/ui",
-    label: "UI",
-    icon: mdiTelevisionGuide,
-  },
   // {
   //   label: "Dropdown",
   //   icon: mdiViewList,

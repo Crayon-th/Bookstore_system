@@ -3,7 +3,7 @@ import request from "@/utils/request";
 //买家评论订单
 export function CustomerPostComment(data) {
   return request({
-    url: "/user/postComment/",
+    url: "/api/comment",
     method: "post",
     data: data,
   });
@@ -84,7 +84,7 @@ export function UserGetReview(data) {
 //买家查看自己的所有订单评论
 export function BuyerGetComment(data) {
   return request({
-    url: "/user/buyerGetComment/",
+    url: "/api/comment/user",
     method: "get",
     params: data,
   });
@@ -93,7 +93,7 @@ export function BuyerGetComment(data) {
 //卖家查看自己某个订单的评论
 export function SellerGetComment(data) {
   return request({
-    url: "/user/sellerGetComment/",
+    url: "/api/comment/order",
     method: "get",
     params: data,
   });
