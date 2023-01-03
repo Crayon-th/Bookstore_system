@@ -110,8 +110,6 @@ const GetNowPage = (distance) => {
         for (let each of BookList.value) {
           if (each.imageurl == null || each.imageurl == "") {
             each.imageurl = "../assets/img/bookCover1.jpg";
-          } else {
-            each.imageurl = "http://localhost:3000" + each.imageurl;
           }
         }
       })
