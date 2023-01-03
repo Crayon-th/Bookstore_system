@@ -70,7 +70,7 @@ const props = defineProps({
   },
   bookPrice: {
     type: Number,
-    default: "暂无价格",
+    default: 0,
   },
 });
 </script>

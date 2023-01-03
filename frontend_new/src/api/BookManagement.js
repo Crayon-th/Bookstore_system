@@ -12,7 +12,7 @@ export function GetallBooks(data) {
 //查询书本
 export function SearchBook(data) {
   return request({
-    url: "/api/admin/bookoverview/",
+    url: "/api/admin/booksearch/",
     method: "get",
     params: data,
   });

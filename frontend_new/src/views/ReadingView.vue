@@ -17,10 +17,10 @@ import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
 import FormControl from "@/components/FormControl.vue";
 // import CardBoxComponentEmpty from "@/components/CardBoxComponentEmpty.vue";
-import { GetallBooks } from "@/api/BookManagement.js";
-import { useMainStore } from "@/stores/main";
+import { GetallBooks, SearchBook } from "@/api/BookManagement.js";
+// import { useMainStore } from "@/stores/main";
 
-const mainStore = useMainStore();
+// const mainStore = useMainStore();
 
 const bookInfo = ref({});
 // const topBookList = ref([]);
@@ -169,10 +169,11 @@ const getRealtimeNewBookList = (target = "first") => {
       size: sizeOnePage.value,
     };
     //获取信息
-    GetallBooks(data)
+    GetBookInfo(data)
       .then((response) => {
         bookInfo.value = response.data;
         newBookList.value = bookInfo.value.records;
+        DonePictrueInfo(newBookList.value);
         maxPage.value = bookInfo.value.pages;
       })
       .catch((error) => {
@@ -187,18 +188,14 @@ const getRealtimeNewBookList = (target = "first") => {
         current: currentPage.value + 1,
         size: sizeOnePage.value,
       };
-      GetallBooks(data)
+      GetBookInfo(data)
         .then((response) => {
           bookInfo.value = response.data;
           newBookList.value = bookInfo.value.records;
+          DonePictrueInfo(newBookList.value);
           maxPage.value = bookInfo.value.pages;
           //页面计数加一
           currentPage.value = currentPage.value + 1;
-          // for (let book of newBookList.value) {
-          //   if (book.imageurl == null || book.imageurl == "") {
-          //     book.imageurl = "../assets/img/bookCover1.jpg";
-          //   }
-          // }
         })
         .catch((error) => {
           console.log(error);
@@ -214,18 +211,14 @@ const getRealtimeNewBookList = (target = "first") => {
         size: sizeOnePage.value,
       };
       //获取信息
-      GetallBooks(data)
+      GetBookInfo(data)
         .then((response) => {
           bookInfo.value = response.data;
           newBookList.value = bookInfo.value.records;
+          DonePictrueInfo(newBookList.value);
           maxPage.value = bookInfo.value.pages;
           //页面计数减一
           currentPage.value = currentPage.value - 1;
-          // for (let book of newBookList.value) {
-          //   if (book.imageurl == null || book.imageurl == "") {
-          //     book.imageurl = "../assets/img/bookCover1.jpg";
-          //   }
-          // }
         })
         .catch((error) => {
           console.log(error);
@@ -233,7 +226,6 @@ const getRealtimeNewBookList = (target = "first") => {
     }
   }
 };
-
 
 onMounted(() => {
   getRealtimeNewBookList("frist");
@@ -250,6 +242,65 @@ const GoToDetail = (bookInfo) => {
 const GoToAddBook = () => {
   router.push("/adding");
 };
+
+//存储搜索的数据
+var SeachInfo = ref("");
+//记录是否采用搜索
+var ifSeach = ref(false);
+
+//实现判断搜索功能的接口
+const SeachBookInfo = () => {
+  //判断内容，如果为空
+  if (null == SeachInfo.value || "" == SeachInfo.value) {
+    //当前页面改为1
+    currentPage.value = 1;
+    //设置为不使用搜索
+    ifSeach.value = false;
+  } //如果不为空
+  else {
+    //设置使用搜索
+    ifSeach.value = true;
+  }
+  //当前页面改为1
+  currentPage.value = 1;
+  //重新请求数据
+  getRealtimeNewBookList("frist");
+};
+
+//封装是否搜索的函数
+const GetBookInfo = (data) => {
+  //如果不使用搜索
+  if (false == ifSeach.value) {
+    return GetallBooks(data);
+  }
+  //如果使用搜索
+  else {
+    let newData = {
+      content: SeachInfo.value,
+      current: data.current,
+      size: data.size,
+    };
+    return SearchBook(newData);
+  }
+};
+
+//处理图片信息
+const DonePictrueInfo = (InfoList) => {
+  let each = 0;
+  //遍历数据
+  for (each in InfoList) {
+    //如果没有图片路径
+    if (null == InfoList[each]["picurl"] || "" == InfoList[each]["picurl"]) {
+      InfoList[each]["picurl"] =
+        "/admin-one-vue-tailwind/src/assets/img/bookCover15.jpg";
+    }
+  }
+};
+
+//处理图片名称
+const getAssetsImages = (name) => {
+  return new URL(name, import.meta.url).href; //本地文件路径
+};
 </script>
 
 <template>
@@ -262,19 +313,19 @@ const GoToAddBook = () => {
       </CardBox>
       <div style="display:flex width:100%">
         <BaseButton
-        color="lightDark"
-        label="搜索书籍信息"
-        :icon="mdiSearchWeb"
-        @click="SeachBookInfo"
+          color="lightDark"
+          label="搜索书籍信息"
+          :icon="mdiSearchWeb"
+          @click="SeachBookInfo"
         />
         <FormControl
-        v-model="SeachInfo"
-        class="search-info-box"
-        placeholder="请输入书籍信息"
+          v-model="SeachInfo"
+          class="search-info-box"
+          placeholder="请输入书籍信息"
         />
       </div>
 
-      <br>
+      <br />
 
       <SectionTitleLineWithButton
         title="新书速递"
@@ -292,7 +343,7 @@ const GoToAddBook = () => {
             <div>
               <!--暂时固定了封面-->
               <img
-                src="/admin-one-vue-tailwind/src/assets/img/bookCover15.jpg"
+                :src="getAssetsImages(book.picurl)"
                 alt="BookImg"
                 class="w-32 h-52 space-x-5"
               />
