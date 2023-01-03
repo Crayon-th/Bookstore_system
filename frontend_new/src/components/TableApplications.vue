@@ -194,19 +194,46 @@ const submitThroughAPI = () => {
   let data = {
     apikey: "14710.44cdfaf05e61e5290a099b2968873716.3a3f1843c5ca1e7e181e74f74440f1ec"
   }
+  let url = detail.isbn;
   console.log(data);
-  GetInfoFromWeb(data)
+  GetInfoFromWeb(url, data)
     .then((response) => {
       console.log(response);
-      if (response.msg == "请求成功") {
+      let info = response;
+      if (response.data.msg == "请求成功") {
         //提交成功
-        isModalActive.value = false;
-        showSubmit.value = true;
+        let data = {
+        author: response.data.data.author,
+        bookname: response.data.data.name,
+        introduction: response.data.data.description.substr(0,250),
+        isbn: detail.isbn,
+        score: response.data.data.doubanScore/10,
+        state: detail.state,
+        type: detail.type,
+        version: response.data.data.publishing
       }
-      else {
-        // errorTip.value = response.data.message;
-        isModalActive.value = false;
-        showProblem.value = true;
+      console.log(data);
+      AddNewBook(data)
+        .then((response) => {
+          console.log(response);
+          if (response.data.message == "成功添加书籍") {
+            //提交成功
+            isModalActive.value = false;
+            showSubmit.value = true;
+          }
+          else {
+            errorTip.value = response.data.message;
+            isModalActive.value = false;
+            showProblem.value = true;
+          }
+        })
+        .catch((error) => {
+          //提交失败
+          errorTip.value = "网络问题";
+          isModalActive.value = false;
+          showProblem.value = true;
+          console.log(error);
+        });
       }
     })
     .catch((error) => {

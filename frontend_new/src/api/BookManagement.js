@@ -67,9 +67,9 @@ export function DeleteApply(data) {
 //上传图床
 
 //通过外部api获取信息
-export function GetInfoFromWeb(data) {
+export function GetInfoFromWeb(url, data) {
   return request({
-    url: "/9787220126437",
+    url: "/" + url,
     baseURL: "/outer",
     method: "get",
     params: data,

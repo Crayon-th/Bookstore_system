@@ -36,12 +36,12 @@ const value = computed({
 
 const confirmCancel = (mode) => {
   value.value = false;
-  emit(mode);
+  emit(mode,"Confirm");
 };
 
 const confirm = () => {
-  // confirmCancel("confirm");
-  emit('confirm', "confirm");
+  confirmCancel("confirm");
+  // emit('confirm', "confirm");
 }
 
 const cancel = () => confirmCancel("cancel");

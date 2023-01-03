@@ -106,7 +106,7 @@
       v-model="ShowMakeComments"
       title="反馈意见"
       button="success"
-      button-label="提交评论"
+      button-label="提交反馈"
       @confirm="ConfirmMakeComment()"
     >
       <div class="mt-8">

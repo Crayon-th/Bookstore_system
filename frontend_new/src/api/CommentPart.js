@@ -3,7 +3,7 @@ import request from "@/utils/request";
 //买家评论订单
 export function CustomerPostComment(data) {
   return request({
-    url: "/api/comment",
+    url: "/user/postComment/",
     method: "post",
     data: data,
   });
@@ -12,7 +12,7 @@ export function CustomerPostComment(data) {
 //用户评价书籍
 export function UserPostReview(data) {
   return request({
-    url: "/user/postReview/",
+    url: "/api/bookReview",
     method: "post",
     data: data,
   });
@@ -30,7 +30,7 @@ export function UserPostRating(data) {
 //用户回复评论
 export function UserPostReviewToReview(data) {
   return request({
-    url: "/user/postReview/",
+    url: "/api/bookReview",
     method: "post",
     data: data,
   });
@@ -66,16 +66,16 @@ export function AdministratorDeleteComment(data) {
 //管理员删除评论
 export function AdministratorDeleteReview(data) {
   return request({
-    url: "/admin/deleteReview/",
-    method: "post",
-    data: data,
+    url: "/api/bookReview",
+    method: "delete",
+    params: data,
   });
 }
 
 //用户查看某本书的评论
 export function UserGetReview(data) {
   return request({
-    url: "/user/getReview/",
+    url: "/api/bookReview",
     method: "get",
     params: data,
   });
@@ -93,7 +93,7 @@ export function BuyerGetComment(data) {
 //卖家查看自己某个订单的评论
 export function SellerGetComment(data) {
   return request({
-    url: "/api/comment/order",
+    url: "/user/sellerGetComment/",
     method: "get",
     params: data,
   });

@@ -23,11 +23,13 @@ import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import {UserPostReview, UserGetReview, UserPostRating} from "@/api/CommentPart.js"
+import {ReportComment} from "@/api/reportPart.js";
 
 const mainStore = useMainStore()
 const router = useRouter();
 
 const showTextBox = ref(false);
+const showReportBox = ref(false);
 
 const submitRating = () => {
     console.log(ratingForm.rating)
@@ -148,6 +150,13 @@ const replyToUserForm = reactive({
     targetUserId : 0
 })
 
+let reportDetail = {
+  bookreviewid : "",
+  reportID : "",
+  violationType: "",
+  violationDescription: "",
+}
+
 const submitReply = () => {
     console.log(replyToUserForm)
     let data = {
@@ -168,6 +177,40 @@ const submitReply = () => {
         //提交成功
         showSubmit.value = true;
       } else {
+        errorTip.value = response.data.message;
+        showProblem.value = true;
+      }
+    })
+    .catch((error) => {
+      //提交失败
+      errorTip.value = "网络问题";
+      showProblem.value = true;
+      console.log(error);
+    });
+}
+
+const createReport = (comment) => {
+  reportDetail.bookreviewid = comment.id;
+  reportDetail.reportID = comment.replyID;
+  showReportBox.value = true;
+}
+
+const submitCommentReport = () => {
+  let data = {
+    bookreviewid : reportDetail.bookreviewid,
+    reportID : reportDetail.reportID,
+    violationDescription : reportDetail.violationDescription,
+    violationType : reportDetail.violationType,
+  }
+  console.log(data);
+  ReportComment(data)
+    .then((response) => {
+      console.log(response.data);
+      if (response.data == 1) {
+        //提交成功
+        showSubmit.value = true;
+      }
+      else {
         errorTip.value = response.data.message;
         showProblem.value = true;
       }
@@ -207,7 +250,7 @@ onMounted(() => {
         <CardBoxModal v-model="showSubmit" @confirm="getConfirmInfo" title="提交成功" button="success">
         </CardBoxModal>
         <!--出了点问题-->
-        <CardBoxModal v-model="showProblem" title="系统开小差了" button="danger">
+        <CardBoxModal v-model="showProblem" @confirm="getConfirmInfo" title="系统开小差了" button="danger">
         <p>{{ errorTip }}</p>
         </CardBoxModal>
 
@@ -216,6 +259,18 @@ onMounted(() => {
             v-model="replyToUserForm.content"
             type="tel"
             placeholder="请输入友善的评论吧"
+        />
+      </CardBoxModal>
+      <CardBoxModal v-model="showReportBox" @confirm="submitCommentReport" title="举报评论: " button="success" hasCancel>
+        <FormControl
+            v-model="reportDetail.violationType"
+            type="tel"
+            placeholder="违规类型..."
+        />
+        <FormControl
+            v-model="reportDetail.violationDescription"
+            type="tel"
+            placeholder="简要描述(可选)..."
         />
       </CardBoxModal>
         <SectionMain>
@@ -276,8 +331,9 @@ onMounted(() => {
                         <p class="text-blue-500 text-sm mr-6">{{comment.userName}}</p>
                         <p class="text-gray-500 text-sm">{{comment.commentTime}}</p>
                     </div>
-                    <p>{{comment.content}}</p>
+                    <p class="mb-6 mt-2">{{comment.content}}</p>
                     <BaseButton @click="replyToUser(comment)" label="回复... " :icon="mdiPencil" color="whiteDark"></BaseButton>
+                    <BaseButton style="float: right" @click="createReport(comment)" label="举报评论 " :icon="mdiPencil" color="danger"></BaseButton>
                     <!-- <BaseDivider /> -->
                 </CardBox>
 

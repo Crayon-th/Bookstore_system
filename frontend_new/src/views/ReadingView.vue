@@ -15,6 +15,7 @@ import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
+import FormControl from "@/components/FormControl.vue";
 // import CardBoxComponentEmpty from "@/components/CardBoxComponentEmpty.vue";
 import { GetallBooks } from "@/api/BookManagement.js";
 import { useMainStore } from "@/stores/main";
@@ -259,6 +260,22 @@ const GoToAddBook = () => {
           🌟添加新书🌟
         </p>
       </CardBox>
+      <div style="display:flex width:100%">
+        <BaseButton
+        color="lightDark"
+        label="搜索书籍信息"
+        :icon="mdiSearchWeb"
+        @click="SeachBookInfo"
+        />
+        <FormControl
+        v-model="SeachInfo"
+        class="search-info-box"
+        placeholder="请输入书籍信息"
+        />
+      </div>
+
+      <br>
+
       <SectionTitleLineWithButton
         title="新书速递"
         :icon="mdiBookOpenBlankVariant"

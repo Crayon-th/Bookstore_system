@@ -21,7 +21,7 @@ export default [
     icon: mdiBookOpenPageVariant,
   },
   {
-    to: "/tables",
+    to: "/chatting",
     label: "我的消息",
     icon: mdiMessage,
   },

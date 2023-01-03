@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useMainStore } from "@/stores/main";
 import { mdiEye } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
@@ -8,6 +8,7 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
+import {GetFeedback, FinishFeedback} from "@/api/reportPart.js";
 
 defineProps({
   checkable: Boolean,
@@ -15,7 +16,9 @@ defineProps({
 
 const mainStore = useMainStore();
 
-const items = computed(() => mainStore.clients);
+const feedbackList = ref([]);
+
+const items = computed(() => feedbackList.value);
 
 let isModalActive = ref(false);
 
@@ -34,6 +37,14 @@ const itemsPaginated = computed(() =>
   )
 );
 
+let detail = {
+  content : "",
+  createtime : "",
+  handle: false,
+  id: 0,
+  userid: 0,
+}
+
 const numPages = computed(() => Math.ceil(items.value.length / perPage.value));
 
 const currentPageHuman = computed(() => currentPage.value + 1);
@@ -48,6 +59,35 @@ const pagesList = computed(() => {
   return pagesList;
 });
 
+//错误提示
+const errorTip = ref("");
+//显示提交成功
+const showSubmit = ref(false);
+//显示提交失败
+const showProblem = ref(false);
+
+onMounted(() => {
+  GetFeedbackList();
+  // console.log(mainStore.userName)
+  // console.log(mainStore.userAvatar)
+});
+
+const GetFeedbackList = () => {
+  let data = {
+      current: 1,
+      size: 20,
+    };
+  GetFeedback(data)
+    .then((response) => {
+      feedbackList.value = response.data.records;
+      console.log(feedbackList.value);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+}
+
 const remove = (arr, cb) => {
   const newArr = [];
 
@@ -60,27 +100,72 @@ const remove = (arr, cb) => {
   return newArr;
 };
 
-const checked = (isChecked, client) => {
+const checked = (isChecked, feedback) => {
   if (isChecked) {
-    checkedRows.value.push(client);
+    checkedRows.value.push(feedback);
   } else {
     checkedRows.value = remove(
       checkedRows.value,
-      (row) => row.id === client.id
+      (row) => row.id === feedback.id
     );
   }
 };
 
-const getMessage = (val) => {
-    console.log(val);
-    isModalActive.value = false;
+const getSubmitConfirm = (Info) => {
+  showSubmit.value = false;
+  showProblem.value = false;
+  console.log(Info);
+}
+
+const submitFinish = (val) => {
+  console.log(val);
+  isModalActive.value = false;
+  let data = {
+    id: detail.id,
+  }
+  console.log(data);
+  FinishFeedback(data)
+    .then((response) => {
+      console.log(response);
+      if (response.data.message == "成功处理反馈") {
+        //提交成功
+        isModalActive.value = false;
+        showSubmit.value = true;
+      }
+      else {
+        errorTip.value = response.data.message;
+        isModalActive.value = false;
+        showProblem.value = true;
+      }
+    })
+    .catch((error) => {
+      //提交失败
+      errorTip.value = "网络问题";
+      isModalActive.value = false;
+      showProblem.value = true;
+      console.log(error);
+    });
+}
+
+const checkFeedback = (feedback) => {
+  isModalActive.value = true;
+  detail.content = feedback.content;
+  detail.createtime = feedback.bookname;
+  detail.handle = feedback.handle;
+  detail.id = feedback.id;
+  detail.userid = feedback.userid;
 }
 </script>
 
 <template>
-  <CardBoxModal v-model="isModalActive" @confirm="getMessage" title="反馈详情">
-    <div>
-        <p>反馈内容: {{}}</p>
+  <CardBoxModal v-model="showSubmit" @confirm="getSubmitConfirm" title="提交成功" button="success">
+  </CardBoxModal>
+  <CardBoxModal v-model="showProblem" @confirm="getSubmitConfirm" title="系统开小差了" button="danger">
+    <p>{{ errorTip }}</p>
+  </CardBoxModal>
+  <CardBoxModal v-model="isModalActive" @confirm="submitFinish" title="反馈详情" buttonLabel="完成记录">
+    <div class="mt-6">
+        <p class="font-bold">反馈内容: {{detail.content}}</p>
     </div>
   </CardBoxModal>
 
@@ -106,28 +191,28 @@ const getMessage = (val) => {
       </tr>
     </thead>
     <tbody>
-      <tr v-for="client in itemsPaginated" :key="client.id">
+      <tr v-for="feedback in itemsPaginated" :key="feedback.id">
         <TableCheckboxCell
           v-if="checkable"
-          @checked="checked($event, client)"
+          @checked="checked($event, feedback)"
         />
         <td class="border-b-0 lg:w-6 before:hidden">
           <UserAvatar
-            :username="client.name"
+            :username="String(feedback.userid)"
             class="w-24 h-24 mx-auto lg:w-6 lg:h-6"
           />
         </td>
         <td data-label="Name">
-          {{ client.name }}
+          {{ feedback.userid }}
         </td>
         <td data-label="Company">
-          {{ client.company }}
+          {{ feedback.content }}
         </td>
-        <td data-label="Created" class="lg:w-1 whitespace-nowrap">
+        <td data-label="createtime" class="lg:w-1 whitespace-nowrap">
           <small
             class="text-gray-500 dark:text-slate-400"
-            :title="client.created"
-            >{{ client.created }}</small
+            :title="feedback.createtime"
+            >{{ feedback.createtime }}</small
           >
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
@@ -137,7 +222,7 @@ const getMessage = (val) => {
               color="info"
               :icon="mdiEye"
               small
-              @click="isModalActive = true"
+              @click="checkFeedback(feedback)"
             />
           </BaseButtons>
         </td>

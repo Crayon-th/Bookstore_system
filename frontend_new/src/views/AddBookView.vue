@@ -192,7 +192,7 @@ const GetBookUrl = (val) => {
 
 const cleanAll = () => {
   form.isbn = "";
-  form.bookName = "";
+  form.bookname = "";
   form.author = "";
   form.version = "";
   form.type = "";
