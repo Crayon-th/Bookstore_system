@@ -238,6 +238,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.5</version>
             </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>
@@ -253,7 +254,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <dockerHost>http://81.68.224.209:2375</dockerHost>
+                    <dockerHost>http://1.117.159.206:2375</dockerHost>
                     <imageName>bookstore/${project.artifactId}</imageName>
                     <imageTags>
                         <imageTag>${project.version}</imageTag>
