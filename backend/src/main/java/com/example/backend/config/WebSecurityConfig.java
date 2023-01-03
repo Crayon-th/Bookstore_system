@@ -107,7 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**", "/error/**","/api/admin/**",
                         "/admin/**","/user/**","/apply/**","/swagger-resources/**"
                          ,"swagger-ui.html#","/ws/**","/socket/**","/api/bookReview/**","/api/comment/**"
-                        ).permitAll()
+                        ,"/commodity/commodityDisplay/bookName/**","/commodity/commodityDisplay/**").permitAll()
                 // 所有请求都需要认证
                 .anyRequest().authenticated()
                 .and().apply(securityConfigurerAdapter());

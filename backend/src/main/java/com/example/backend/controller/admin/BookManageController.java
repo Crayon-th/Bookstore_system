@@ -6,7 +6,6 @@ import com.example.backend.service.admin.BookManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,8 +19,8 @@ public class BookManageController {
     }
 
     @GetMapping("/api/admin/booksearch/")
-    public Map<String, Object> searchbook(@RequestParam String standard, String content, boolean ifblur){
-        return bookManageService.searchbook(standard,content,ifblur);
+    public IPage searchbook(@RequestParam String content,long current,long size){
+        return bookManageService.searchbook(content,current,size);
     }
 
     @PostMapping("/api/admin/bookedit/")

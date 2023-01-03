@@ -50,7 +50,7 @@ public class CommodityDisplayServiceImpl implements CommodityDisplayService {
     {
         QueryWrapper<Commodity> queryWrapper = new QueryWrapper<>();
         Page<Commodity> page = new Page<>(current,size);
-        IPage iPage = commodityMapper.selectPage(page,queryWrapper.like("bookName",bookName));
+        IPage iPage = commodityMapper.selectPage(page,queryWrapper.like("bookName",bookName).eq("isFinished",0));
         return iPage;
 
     }
