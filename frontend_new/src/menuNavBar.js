@@ -17,12 +17,9 @@ export default [
         to: "/profile",
       },
       {
-        icon: mdiCogOutline,
-        label: "Settings",
-      },
-      {
         icon: mdiEmail,
         label: "Messages",
+        isMessage: true,
       },
       {
         isDivider: true,

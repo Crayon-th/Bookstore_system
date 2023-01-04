@@ -55,6 +55,9 @@ const menuClick = (event, item) => {
   if (item.isShopping) {
     router.push("/");
   }
+  if (item.isMessage) {
+    router.push("/chatting");
+  }
 };
 </script>
 
