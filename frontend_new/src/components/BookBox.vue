@@ -80,7 +80,7 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   background-size: 100% 100%;
-  background-image: url("@/assets/img/1.jpg");
+  /* background-image: url("@/assets/img/1.jpg"); */
   background-attachment: fixed;
   background-size: 100% 100%;
   height: 300px;

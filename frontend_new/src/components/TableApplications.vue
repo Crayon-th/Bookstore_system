@@ -276,6 +276,24 @@ const GetBookUrl = (val) => {
   detail.picurl = val.bookimg;
   console.log(detail.picurl);
 };
+
+const rejectDirectly = () => {
+  let appyId = {
+    id: detail.id,
+  }
+  DeleteApply(appyId)
+  .then((response) => {
+    console.log(response);
+    isModalActive.value = false;
+    showSubmit.value = true;
+  })
+  .catch((error) => {
+    console.log(error);
+    errorTip.value = response.data.message;
+    isModalActive.value = false;
+    showProblem.value = true;
+  });
+}
 </script>
 
 <template>
@@ -310,6 +328,12 @@ const GetBookUrl = (val) => {
             color="success"
             small
             @click="submitThroughAPI"
+          />
+          <BaseButton
+            label="拒绝申请"
+            color="danger"
+            small
+            @click="rejectDirectly"
           />
         </BaseButtons>
         <FormField class="mt-2" help="Max 2MB">

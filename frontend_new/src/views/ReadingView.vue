@@ -5,6 +5,7 @@ import {
   mdiArrowLeft,
   mdiArrowRight,
   mdiBookOpenBlankVariant,
+mdiSearchWeb,
   //   mdiClose,
 } from "@mdi/js";
 import { useRouter } from "vue-router";
@@ -319,7 +320,7 @@ const getAssetsImages = (name) => {
         @click="SeachBookInfo"
         />
         <FormControl 
-        v-model="SeachInfo"
+        v-model="SeachInfo" @keyup.enter.native="SeachBookInfo"
         class="col-start-3 col-span-11 search-info-box"
         placeholder="请输入书籍信息"
         />

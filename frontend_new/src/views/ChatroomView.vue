@@ -148,7 +148,43 @@ const router = useRouter();
 
 let user = '';
 // 消息记录列表
-let msgList= ref([]);
+let msgList= ref([{
+    time:"11.01.10",//时间
+    to: '',//发给谁
+    from: 'MaQi',
+    msg: '好好'
+},
+{
+    time:"11.01.10",//时间
+    to: '',//发给谁
+    from: 'MaQi',
+    msg: '好的好的'
+},
+{
+    time:"11.01.10",//时间
+    to: '',//发给谁
+    from: 'MaQi',
+    msg: '可以'
+},
+{
+    time:"11.01.10",//时间
+    to: '',//发给谁
+    from: 'MaQi',
+    msg: '嗯好'
+},
+{
+    time:"11.01.10",//时间
+    to: '',//发给谁
+    from: 'MaQi',
+    msg: '是的'
+},
+{
+    time:"11.01.10",//时间
+    to: '',//发给谁
+    from: 'MaQi',
+    msg: '对的'
+},
+]);
 // 发送的消息
 let message= {
     time:null,//时间
