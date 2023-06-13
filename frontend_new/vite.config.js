@@ -24,7 +24,8 @@ export default defineConfig({
     //反向代理配置，注意rewrite写法，开始没看文档在这里踩了坑
     proxy: {
       "/api": {
-        target: "http://1.117.159.206:3000/", //代理接口
+        target: "http://127.0.0.1:3000/",
+        //target: "http://1.117.159.206:3000/", //代理接口
         changeOrigin: true,
         ws: true,
         rewrite: (path) => path.replace(/^\/api/, ""),

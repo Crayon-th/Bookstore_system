@@ -1,21 +1,11 @@
-### 项目进度说明（updating）
+### 一些说明【2023/6/13】
 
 可用验证账户：
 
-username：nn
+Username:fgf
 
-password：111
-
-username:dd
-
-password: pdd
+Password:123123123
 
 
 
-#### 目前后端进度：
-
-Nov/21/afternoon
-
-实现后端登陆采用jwt验证
-
-实现注册和查询用户信息功能
+目前项目的前后端是可以在本地直接运行的【把前端的接口调节为127.0.0.1了】
