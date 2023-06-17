@@ -111,7 +111,7 @@ const getSeed = (SeedForm) => {
     <CardBoxModal v-model="showSubmit" @confirm="getConfirmInfo" title="提交成功" button="success">
     </CardBoxModal>
     <CardBoxModal v-model="showProblem" @confirm="getConfirmInfo" title="系统开小差了" button="danger">
-      <p>{{ errorTip }}</p>
+      <p>{{errorTip}}</p>
     </CardBoxModal>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiBadgeAccountHorizontal" title="WorkBench" main></SectionTitleLineWithButton>
@@ -157,6 +157,7 @@ const getSeed = (SeedForm) => {
             help="Required. Your current password"
           >
             <FormControl
+              id="currentpw"
               v-model="passwordForm.password_current"
               :icon="mdiAsterisk"
               name="password_current"
@@ -195,7 +196,7 @@ const getSeed = (SeedForm) => {
 
           <template #footer>
             <BaseButtons>
-              <BaseButton type="submit" color="info" label="Submit" />
+              <BaseButton id='submitbut' type="submit" color="info" label="Submit" />
               <!-- <BaseButton color="info" label="Options" outline /> -->
             </BaseButtons>
           </template>

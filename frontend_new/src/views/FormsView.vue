@@ -10,11 +10,13 @@
       <CardBox>
         <FormField label="用户名 & 邮箱">
           <FormControl
+            id="usernamefield"
             v-model="form.username"
             :icon="mdiAccount"
             placeholder="输入用户名"
           />
           <FormControl
+            id="mailfield"
             v-model="form.email"
             type="email"
             :icon="mdiMail"
@@ -24,6 +26,7 @@
 
         <FormField label="邮箱验证码" help="请在点击获取验证码后查看邮箱">
           <FormControl
+            id="codefield"
             v-model="form.code"
             type="tel"
             placeholder="请输入邮箱验证码"
@@ -32,6 +35,7 @@
 
         <FormField label="设置密码">
           <FormControl
+            id="pwfield"
             v-model="form.password"
             type="password"
             placeholder="请输入密码"
@@ -45,12 +49,14 @@
         <template #footer>
           <BaseButtons>
             <BaseButton
+              id="button1"
               type="submit"
               color="info"
               label="注册用户"
               @click="Submit"
             />
             <BaseButton
+              id="button2"
               type="reset"
               color="info"
               outline

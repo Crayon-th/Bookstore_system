@@ -42,6 +42,7 @@ const submit = () => {
       });
       //页面跳转
       router.push("/");
+      router.push("/");
     })
     .catch((error) => {
       //弹窗
@@ -64,6 +65,7 @@ const submit = () => {
       <CardBox :class="cardClass" is-form>
         <FormField label="用户名" help="请输入您的用户名">
           <FormControl
+            id="usernamefield"
             v-model="form.login"
             :icon="mdiAccount"
             name="login"
@@ -73,6 +75,7 @@ const submit = () => {
 
         <FormField label="密码" help="请输入您的密码">
           <FormControl
+            id="pwfield"
             v-model="form.pass"
             :icon="mdiAsterisk"
             type="password"
@@ -84,12 +87,14 @@ const submit = () => {
         <template #footer>
           <BaseButtons>
             <BaseButton
+              id="button1"
               type="submit"
               color="info"
               label="登 录"
               @click="submit"
             />
             <BaseButton
+              id="button2"
               to="/userRegistration"
               color="info"
               outline

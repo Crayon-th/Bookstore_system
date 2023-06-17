@@ -177,7 +177,7 @@ const getSeed = (SeedForm) => {
 
           <template #footer>
             <BaseButtons>
-              <BaseButton type="submit" color="info" label="Submit" />
+              <BaseButton id="submitbut" type="submit" color="info" label="Submit" />
               <!-- <BaseButton color="info" label="Options" outline /> -->
             </BaseButtons>
           </template>
