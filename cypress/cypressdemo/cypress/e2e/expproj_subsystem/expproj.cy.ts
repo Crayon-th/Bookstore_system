@@ -11,13 +11,25 @@ describe('main teacher test', () => {
         cy.url().should('include', 'gradedisplay');
     })
 
+    //教师批改实验报告栏目[非法评分]
+    it("judge report[illegal number]", () => {
+        cy.get("div[class='el-submenu__title']").filter(':visible').eq(1).click();
+        cy.get("li[role='menuitem']").filter(':visible').eq(2).click();
+        cy.get("button:contains('批改报告')").eq(1).click(); //定位到第二行lyr的按钮处
+        cy.url().should('include', 'correctreportdetail');
+        cy.get('input[aria-label="描述文字"]').clear().type("1.1");
+        cy.get("textarea").type("very good");
+        cy.get("button:contains('提交批改')").click();
+        cy.get("div[role='alert']").should("have.text", '提交批改失败');
+    })
+
     //教师批改实验报告栏目
     it("judge report", () => {
         cy.get("div[class='el-submenu__title']").filter(':visible').eq(1).click();
         cy.get("li[role='menuitem']").filter(':visible').eq(2).click();
-        cy.get("button:contains('批改报告')").eq(0).click();
+        cy.get("button:contains('批改报告')").eq(1).click();
         cy.url().should('include', 'correctreportdetail');
-        cy.get('span[class="el-input-number__increase"]').dblclick().dblclick();
+        cy.get('input[aria-label="描述文字"]').clear().type("5");
         cy.get("textarea").type("very good");
         cy.get("button:contains('提交批改')").click();
         cy.get("div[role='alert']").should("have.text", '提交批改成功')
